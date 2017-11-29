@@ -1,0 +1,13 @@
+<launch>
+
+  <!-- This file makes it easy to include different planning pipelines; 
+       It is assumed that all planning pipelines are named XXX_planning_pipeline.launch  -->  
+
+  <arg name="prototype"  />
+  <arg name="pipeline" default="ompl" />
+
+  <include file="$(find fourbythree_moveit)/launch/$(arg pipeline)_planning_pipeline.launch.xml" >
+    <arg name="prototype" value="$(arg prototype)" />
+  </include>
+
+</launch>

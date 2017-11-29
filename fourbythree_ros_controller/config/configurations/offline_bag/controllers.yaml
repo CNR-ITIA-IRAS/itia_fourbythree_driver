@@ -1,0 +1,49 @@
+move_group:
+  controller_list:
+    - name: ""
+      action_ns: "/planner_hi/fir_planner/follow_joint_trajectory"
+      type: FollowJointTrajectory
+      joints:
+        - joint_1
+        - joint_2
+        - joint_3
+        - joint_4
+        - joint_5
+        - joint_6
+      
+
+controllers:
+  motor:
+    velocity_sensor_hi: "velocity_sensor"
+  link_controller:
+    velocity_sensor_hi: "velocity_sensor"
+    target_velocity_sensor_hi: "target_velocity_sensor"
+
+velocity_sensor_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/none"
+
+  velocity_sensor:
+    type: "itia/control/VelocitySensor"
+    setpoint_topic_name: "/link/joint_states"
+    twist_topic_name: "/link/twist"
+    base_frame: "base"
+    tool_frame: "flange"
+    base_is_reference: true   # true base_frame, false tool frame
+    velocity_filtering_coeff: 0 # exp(-sampling_period/time_constant)
+    
+target_velocity_sensor_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/none"
+
+  target_velocity_sensor:
+    type: "itia/control/VelocitySensor"
+    setpoint_topic_name: "/link/joint_target"
+    twist_topic_name: "/link/twist_target"
+    base_frame: "base"
+    tool_frame: "flange"
+    base_is_reference: true   # true base_frame, false tool frame
+    velocity_filtering_coeff: 0 # exp(-sampling_period/time_constant)
+    

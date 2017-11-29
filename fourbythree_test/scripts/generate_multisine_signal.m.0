@@ -1,0 +1,127 @@
+clc;
+close all;
+clear all;
+
+%% ADDPATH
+addpath('/home/maxwell/itia_ws/src/itia_identification/itia_frequency_identification/scripts');
+
+%% SET SIGNAL PARAMETERS
+folder_base = '/home/maxwell/itia_ws/data/fourbythree/freq_test';
+folder_date = datestr(now,'yyyymmdd');
+trj_namespace = 'fourbythree_trj';
+
+%trj_name = ['ident005.bin'];
+trj_name = ['vali005.bin'];
+
+Ts = 1e-3;   % sample time [s]  C5Gopen sampling period
+Fs = 1/Ts;        %sampling frequeny [Hz]     !!!! 10 Hz max freq
+complete_filename =  [ folder_base,filesep,trj_name];
+nRep = 20;
+
+
+fBase=1;
+fLim = [0.5 5];
+tf = max(30,nRep*1/fLim(1)); %final time [sec]
+time = (0:Ts:tf)';
+idxs=(1:floor(fLim(end)/fBase))';
+fsw=fBase*idxs;
+csw=zeros(size(idxs));
+csw(1:2:end)=1i*2/pi./idxs(1:2:end);
+sw=fourier_series(time+0.25/fBase,fsw,csw);
+
+delta_f=0.1;
+fVct=logspace(log10(fLim(1)),log10(fLim(2)),300)';
+%fVct=[fLim(1):delta_f:fLim(end)]';
+nFreq=100;
+
+idxs=randperm(length(fVct));
+idxs=sort(idxs(1:nFreq));
+fVct=fVct(idxs);
+
+fprintf('[ %s ] Saving data in: \t %s \n', mfilename, complete_filename );
+
+
+
+amplitude=sqrt(fVct);
+
+[qp_ff(:,1),csp] = multisine_rand_phase( time, fVct, amplitude, 100);
+csp=csp/max(abs(qp_ff)); 
+qp_ff=qp_ff/max(abs(qp_ff)); 
+idx_zero=find(abs(qp_ff)<1e-2,1);
+if isempty(idx_zero)
+  idx_zero=1;
+end
+
+time=time+time(idx_zero);
+
+qp_ff=fourier_series(time,fVct,csp);
+freq=fVct;
+%qp_ff=sw+qp_ff;
+%freq_ident=sort(union(fVct,fsw(1:2:end)));
+csignal=fourier_coeff(time,freq,qp_ff);
+
+qp_ff=qp_ff/max(abs(qp_ff));
+
+q_ff=cumtrapz(qp_ff)*Ts;
+
+max(abs(q_ff))
+
+%return
+fid=fopen(complete_filename ,'w');
+data=fwrite(fid,[q_ff;qp_ff],'double');
+fclose(fid);
+
+save([complete_filename(1:end-4),'.mat'],'csignal','freq');
+plot(time,qp_ff)
+return
+%% SAVE TRAJECTORY
+
+fileID = fopen([fileName '.yaml'],'w');
+
+fprintf(fileID,'%s:\n',trj_namespace);
+fprintf(fileID,'  %s:\n',trj_name);
+npoint = length(q_ff);
+fprintf(fileID,'    positions: \n');
+for j=1:length(q_ff)
+  fprintf(fileID,'    - [%3.3f]\n',  q_ff(j,1));
+end
+fprintf(fileID,'    velocities: \n');
+for j=1:length(q_ff)
+  fprintf(fileID,'    - [%3.3f]\n',  qp_ff(j,1));
+end
+
+
+fclose(fileID);
+
+close all
+
+NFFT = 2^nextpow2(length(time)); % Next power of 2 from length of y
+qpFFT = fft(qp_ff,NFFT)/length(time);
+freq = Fs/2*linspace(0,1,NFFT/2+1);
+
+figure()
+hold on
+plot(time,qp_ff)
+xlabel('Time [s]');
+ylabel('Velocity [deg/s]');
+grid on
+title ('FF Velocity contribution')
+
+figure()
+hold on
+plot(time,q_ff)
+xlabel('Time [s]');
+ylabel('Position [deg]');
+grid on
+title ('Final Position (q_ff+q)')
+
+figure()
+hold on
+stem(freq,2*abs(qpFFT(1:NFFT/2+1,1)))
+xlabel('Freq [Hz]');
+ylabel('Velocity');
+grid on
+xlim([0 125])
+title ('Freq of FF velocity signal')
+
+

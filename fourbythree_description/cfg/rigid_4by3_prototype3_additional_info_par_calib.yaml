@@ -1,0 +1,34 @@
+base_link: base
+gravity: [0, 0, -9.806]
+joint_1:
+  friction:
+    coefficients: [2.6971936978261195, 6.739615170660036, 1.0e-06, 100.0]
+    type: Polynomial1
+  motor: {type: Ideal}
+joint_2:
+  friction:
+    coefficients: [5.5561917770791664, 1.132628202102514, 1.0e-06, 100.0]
+    type: Polynomial1
+  motor: {type: Ideal}
+joint_3:
+  friction:
+    coefficients: [3.331442274702017, -5.867842965596185, 1.0e-06, 100.0]
+    type: Polynomial1
+  motor: {type: Ideal}
+joint_4:
+  friction:
+    coefficients: [0.3163729893279725, 1.052837641635993, 1.0e-06, 100.0]
+    type: Polynomial1
+  motor: {type: Ideal}
+joint_5:
+  friction:
+    coefficients: [0.33601342659459066, 2.0834913393097145, 1.0e-06, 100.0]
+    type: Polynomial1
+  motor: {type: Ideal}
+joint_6:
+  friction:
+    coefficients: [0.2003737651480612, 1.5675646644969927, 1.0e-06, 100.0]
+    type: Polynomial1
+  motor: {type: Ideal}
+joint_names: [joint_1, joint_2, joint_3, joint_4, joint_5, joint_6]
+tool_link: link6

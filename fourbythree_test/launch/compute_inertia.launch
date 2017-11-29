@@ -1,0 +1,13 @@
+<launch>
+  <arg name="robot" default="3" /> 
+  <arg name="topic" default="link" /> 
+  <include file="$(find fourbythree_description)/launch/prototype$(arg robot)_upload.launch">
+    <arg name="topic" default="$(arg topic)" /> 
+  </include>  
+  <param name="/base_frame" type="string" value="base" />
+  <param name="/tool_frame" type="string" value="flange" />
+  
+  <node name="compute_inertia_matrix" pkg="itia_dynamics_core" type="compute_inertia_matrix" output="screen" />
+ 
+    
+</launch>

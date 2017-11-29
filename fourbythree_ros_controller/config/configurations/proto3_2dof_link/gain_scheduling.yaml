@@ -1,0 +1,7 @@
+gain_scheduling:
+  hardware_interface_ns: "link_controller_hi"
+  controllers_prefix: "driven_mass_control"
+  overlapping: 0.20
+  joint_1: [0.4, 2]
+  joint_2: [3]
+    

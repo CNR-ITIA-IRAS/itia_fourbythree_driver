@@ -1,0 +1,20 @@
+<launch>
+	<arg name="trj" default="home" /> 
+  <arg name="log_name" default="trj"/> 
+<!-- 	<rosparam file="$(find fourbythree_test)/cfg/motor_predefined_position.yaml" command="load"/> -->
+  <rosparam file="$(find fourbythree_test)/cfg/motor_predefined_position.yaml" command="load"/>
+  <param name="/binary_logger/test_name" type="string" value="$(arg log_name)" />
+  
+	<node pkg="itia_tutils" type="trajectory_client" name="hand_trajectory_client" output="screen">
+		<remap from="/trajectory/positions" to="/$(arg trj)/positions"/>
+		<remap from="/trajectory/velocities" to="/$(arg trj)/velocities"/>
+		<remap from="/trajectory/time_from_start" to="/$(arg trj 	)/time_from_start"/>
+		<remap from="/trajectory/joint_names" to="/test/joint_names"/>
+    <remap from="follow_joint_trajectory/cancel" to="/motor_planner_hi/motor_fir_planner/follow_joint_trajectory/cancel"/>
+    <remap from="follow_joint_trajectory/feedback" to="/motor_planner_hi/motor_fir_planner/follow_joint_trajectory/feedback"/>
+    <remap from="follow_joint_trajectory/goal" to="/motor_planner_hi/motor_fir_planner/follow_joint_trajectory/goal"/>
+    <remap from="follow_joint_trajectory/result" to="/motor_planner_hi/motor_fir_planner/follow_joint_trajectory/result"/>
+    <remap from="follow_joint_trajectory/status" to="/motor_planner_hi/motor_fir_planner/follow_joint_trajectory/status"/>
+
+	</node>
+</launch>

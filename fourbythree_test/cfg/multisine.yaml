@@ -1,0 +1,7 @@
+fourbythree_trj:
+  multisine:
+    moving_axis: 5
+    velocity: 20
+    signal: '/home/maxwell/itia_ws/data/fourbythree/freq_test/excsignal001.bin'
+    test_name: '/home/maxwell/itia_ws/data/fourbythree/freq_test/bin/excsignal001_vel20'
+

@@ -1,0 +1,52 @@
+<launch>
+  
+  <arg name="using_external_nodelet_manager" default="true" /> 
+  <arg name="simulation" default="false" /> 
+  
+
+  <arg name="identification_tool" default="false" /> 
+  <arg name="nodelet_manager_name" value="fourbythree_nodelet" /> 
+  <arg name="low_level_hardware_interface_name" value="low_controller_hi" /> 
+  <arg name="high_level_hardware_interface_name" value="high_controller_hi" /> 
+  <arg name="planner_interface_name" value="planner_hi" /> 
+  <arg name="gui" default="false" /> 
+	<arg name="planner_name" value="fir_planner" /> 
+	<arg name="low_level_controller_name" value="deflection_control" /> 
+  <arg name="high_level_controller_name" value="cascade_control" /> 
+  <arg name="feedforward_interface_name" value="model_feedforward_hi" /> 
+  <arg name="feedforward_controller_name" value="model_feedforward_control" />   
+
+  
+
+  
+  
+  <node pkg="rosservice" 
+        name="unload_low_level_hi" 
+        type="rosservice" 
+        args="call --wait /$(arg nodelet_manager_name)/unload_nodelet 
+              '$(arg low_level_hardware_interface_name)'" 
+        output="screen" />
+
+  <node pkg="rosservice" 
+        name="unload_high_level_hi" 
+        type="rosservice" 
+        args="call --wait /$(arg nodelet_manager_name)/unload_nodelet 
+              '$(arg high_level_hardware_interface_name)'" 
+        output="screen" />
+
+        
+  <node pkg="rosservice" 
+        name="unload_planner_level_hi" 
+        type="rosservice" 
+        args="call --wait /$(arg nodelet_manager_name)/unload_nodelet 
+              '$(arg planner_interface_name)'" 
+        output="screen" />
+  
+  
+  <node pkg="rosservice" 
+        name="unload_ffw_level_hi" 
+        type="rosservice" 
+        args="call --wait /$(arg nodelet_manager_name)/unload_nodelet 
+              '$(arg feedforward_interface_name)'" 
+        output="screen" />
+</launch>

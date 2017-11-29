@@ -1,0 +1,15 @@
+<launch>
+  
+  <arg name="nodelet_manager_name" value="fourbythree_nodelet" /> 
+  <arg name="feedforward_name" value="torque_multisine" /> 
+ 
+  
+
+	<rosparam command="load" file="$(find fourbythree_test)/cfg/defl_multisine_jnt2.yaml" />
+	
+	<rosparam command="load" file="$(find fourbythree_test)/cfg/binary_logger_fourbythree_test.yaml" />
+	
+	<node pkg="fourbythree_test" type="test_multisine_single_axis" name="test_multisine_single_axis" output="screen"/>
+	
+</launch>
+

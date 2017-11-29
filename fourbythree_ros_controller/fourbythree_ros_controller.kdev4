@@ -1,0 +1,3 @@
+[Project]
+Manager=KDevCMakeManager
+Name=fourbythree_ros_controller

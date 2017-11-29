@@ -1,0 +1,15 @@
+controlled_joint_names:  
+  - "joint_1"
+  - "joint_2"
+  - "joint_3"
+  - "joint_4"
+  - "joint_5"
+  - "joint_6"
+
+
+
+load_ndlcom: false
+configuration_time: 5
+enable_motor: true
+stop_immediately: false
+starting_controller: "link_controller"

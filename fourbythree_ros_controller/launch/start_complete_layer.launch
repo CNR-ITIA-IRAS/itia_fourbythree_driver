@@ -1,0 +1,42 @@
+<launch>
+  <arg name="simulation" default="false" /> 
+  <arg name="rviz" default="false" /> 
+  <arg name="port" default="/dev/ttyUSB0"/> 
+  <arg name="configuration" default="simulation_planner"/>
+  <arg name="nodelet_manager_name" default="fourbythree_nodelet" /> 
+  <arg name="gs" default="false" /> 
+  <arg name="override_bag" default="false" /> 
+  <arg name="robot" default="5"/>
+ 
+  <node name="fourbythree_rqt_gui" pkg="rqt_gui" type="rqt_gui" args="--perspective-file $(find fourbythree_ros_controller)/perspective/robot_runtime_monitor.perspective" output="log" />
+  <group if="$(arg override_bag)">
+    <node pkg="rosbag" type="record" name="rosbag_record_diagnostics" args=" -O $(env HOME)/.ros/diagnostic_log /diagnostics" />
+  </group>
+  <group unless="$(arg override_bag)">
+    <node pkg="rosbag" type="record" name="rosbag_record_diagnostics" args=" -o $(env HOME)/.ros/diagnostic_log /diagnostics " />
+  </group>
+  
+  <include file="$(find fourbythree_ros_controller)/launch/fourbythree_nodelet_manager.launch">
+  </include>  
+  
+  <include file="$(find fourbythree_ros_controller)/launch/start_controller.launch">
+    <arg name="nodelet_manager_name" default="$(arg nodelet_manager_name)"/>
+    <arg name="configuration" default="$(arg configuration)"/>
+    <arg name="robot" default="$(arg robot)"/>
+    <arg name="port" default="$(arg port)"/>
+    <arg name="rviz" default="$(arg rviz)"/>
+    <arg name="simulation" default="$(arg simulation)"/>
+  </include>  
+  
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/robots/proto$(arg robot)/force_torque_limit.yaml" />
+  
+  <node name="tekniker_itia_wrapper_node" pkg="fourbythree_ros_controller" type="tekniker_itia_wrapper_node" output="screen" />
+
+  
+  <group if="$(arg gs)">
+    <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/gain_scheduling.yaml" />
+    <node name="fourbythree_gain_scheduling" pkg="fourbythree_ros_controller" type="gain_scheduling" output="screen" />
+  </group>
+
+  
+</launch>

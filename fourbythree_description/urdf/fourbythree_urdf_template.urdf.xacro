@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro"
+       name="fourbythree_urdf_template" >
+  
+  
+  <!-- Insert here Denavit–Hartenberg parameters of the robot -->
+  <!--  LINK 1 DH PARAMETERS   -->
+  <xacro:property name="link1_d" value="0.0" />  <!-- METER -->
+  <xacro:property name="link1_theta" value="0.0" /> <!-- RADIANT -->
+  <xacro:property name="link1_r" value="0.0" /> <!-- METER -->
+  <xacro:property name="link1_alpha" value="${pi/2}" /> <!-- RADIANT -->
+  <!--  LINK 2 DH PARAMETERS   -->
+  <xacro:property name="link2_d" value="0.0" />  <!-- METER -->
+  <xacro:property name="link2_theta" value="${pi/2}" /> <!-- RADIANT -->
+  <xacro:property name="link2_r" value="0.6569" /> <!-- METER -->
+  <xacro:property name="link2_alpha" value="0.0" /> <!-- RADIANT -->
+  <!--  LINK 3 DH PARAMETERS   -->
+  <xacro:property name="link3_d" value="0.006" />  <!-- METER -->
+  <xacro:property name="link3_theta" value="${-pi/2}" /> <!-- RADIANT -->
+  <xacro:property name="link3_r" value="0.0" /> <!-- METER -->
+  <xacro:property name="link3_alpha" value="${-pi/2}" /> <!-- RADIANT -->
+  <!--  LINK 4 DH PARAMETERS   -->
+  <xacro:property name="link4_d" value="0.56345" />  <!-- METER -->
+  <xacro:property name="link4_theta" value="0.0" /> <!-- RADIANT -->
+  <xacro:property name="link4_r" value="0.0" /> <!-- METER -->
+  <xacro:property name="link4_alpha" value="${pi/2}" /> <!-- RADIANT -->
+  <!--  LINK 5 DH PARAMETERS   -->
+  <xacro:property name="link5_d" value="0.0" />  <!-- METER -->
+  <xacro:property name="link5_theta" value="0.0" /> <!-- RADIANT -->
+  <xacro:property name="link5_r" value="0.0" /> <!-- METER -->
+  <xacro:property name="link5_alpha" value="${-pi/2}" /> <!-- RADIANT -->
+  <!--  LINK 6 DH PARAMETERS   -->
+  <xacro:property name="link6_d" value="0.26055" />  <!-- METER -->
+  <xacro:property name="link6_theta" value="0.0" /> <!-- RADIANT -->
+  <xacro:property name="link6_r" value="0.0" /> <!-- METER -->
+  <xacro:property name="link6_alpha" value="0.0" /> <!-- RADIANT -->
+  
+  
+  <!-- JOINT1 PROPERTIES -->  
+  <xacro:property name="link1_max_pos" value="2.8" /> <!-- RADIANT -->
+  <xacro:property name="link1_min_pos" value="-2.8" /> <!-- RADIANT -->
+  <xacro:property name="link1_max_vel" value="0.5" /> <!-- RADIANT/SECOND -->
+  <xacro:property name="link1_max_eff" value="250" /> <!-- Nm -->
+  <!-- JOINT2 PROPERTIES -->  
+  <xacro:property name="link2_max_pos" value="2.8" /> <!-- RADIANT -->
+  <xacro:property name="link2_min_pos" value="-2.8" /> <!-- RADIANT -->
+  <xacro:property name="link2_max_vel" value="0.5" /> <!-- RADIANT/SECOND -->
+  <xacro:property name="link2_max_eff" value="250" /> <!-- Nm -->
+  <!-- JOINT3 PROPERTIES -->  
+  <xacro:property name="link3_max_pos" value="2.8" /> <!-- RADIANT -->
+  <xacro:property name="link3_min_pos" value="-2.8" /> <!-- RADIANT -->
+  <xacro:property name="link3_max_vel" value="0.5" /> <!-- RADIANT/SECOND -->
+  <xacro:property name="link3_max_eff" value="90" /> <!-- Nm -->
+  <!-- JOINT4 PROPERTIES -->  
+  <xacro:property name="link4_max_pos" value="2.8" /> <!-- RADIANT -->
+  <xacro:property name="link4_min_pos" value="-2.8" /> <!-- RADIANT -->
+  <xacro:property name="link4_max_vel" value="0.5" /> <!-- RADIANT/SECOND -->
+  <xacro:property name="link4_max_eff" value="40" /> <!-- Nm -->
+  <!-- JOINT5 PROPERTIES -->  
+  <xacro:property name="link5_max_pos" value="2.8" /> <!-- RADIANT -->
+  <xacro:property name="link5_min_pos" value="-2.8" /> <!-- RADIANT -->
+  <xacro:property name="link5_max_vel" value="0.5" /> <!-- RADIANT/SECOND -->
+  <xacro:property name="link5_max_eff" value="40" /> <!-- Nm -->
+  <!-- JOINT6 PROPERTIES -->  
+  <xacro:property name="link6_max_pos" value="2.8" /> <!-- RADIANT -->
+  <xacro:property name="link6_min_pos" value="-2.8" /> <!-- RADIANT -->
+  <xacro:property name="link6_max_vel" value="0.5" /> <!-- RADIANT/SECOND -->
+  <xacro:property name="link6_max_eff" value="40" /> <!-- Nm -->
+  
+  <xacro:include filename="$(find fourbythree_description)/urdf/dh_link.urdf.xacro" />
+
+  <link name="base" />
+  
+  <xacro:dh_link joint_name="joint_1" link_name="link1" parent_name="base" d="${link1_d}" r="${link1_r}" theta="${link1_theta}" alpha="${link1_alpha}" max_pos="${link1_max_pos}" min_pos="${link1_min_pos}" max_vel="${link1_max_vel}" max_eff="${link1_max_eff}"/>
+  <xacro:dh_link joint_name="joint_2" link_name="link2" parent_name="link1" d="${link2_d}" r="${link2_r}" theta="${link2_theta}" alpha="${link2_alpha}" max_pos="${link2_max_pos}" min_pos="${link2_min_pos}" max_vel="${link2_max_vel}" max_eff="${link2_max_eff}"/>
+  <xacro:dh_link joint_name="joint_3" link_name="link3" parent_name="link2" d="${link3_d}" r="${link3_r}" theta="${link3_theta}" alpha="${link3_alpha}" max_pos="${link3_max_pos}" min_pos="${link3_min_pos}" max_vel="${link3_max_vel}" max_eff="${link3_max_eff}"/>
+  <xacro:dh_link joint_name="joint_4" link_name="link4" parent_name="link3" d="${link4_d}" r="${link4_r}" theta="${link4_theta}" alpha="${link4_alpha}" max_pos="${link4_max_pos}" min_pos="${link4_min_pos}" max_vel="${link4_max_vel}" max_eff="${link4_max_eff}"/>
+  <xacro:dh_link joint_name="joint_5" link_name="link5" parent_name="link4" d="${link5_d}" r="${link5_r}" theta="${link5_theta}" alpha="${link5_alpha}" max_pos="${link5_max_pos}" min_pos="${link5_min_pos}" max_vel="${link5_max_vel}" max_eff="${link5_max_eff}"/>
+  <xacro:dh_link joint_name="joint_6" link_name="flange" parent_name="link5" d="${link6_d}" r="${link6_r}" theta="${link6_theta}" alpha="${link6_alpha}" max_pos="${link6_max_pos}" min_pos="${link6_min_pos}" max_vel="${link6_max_vel}" max_eff="${link6_max_eff}"/>
+</robot>

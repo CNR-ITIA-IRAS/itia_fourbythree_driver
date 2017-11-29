@@ -1,0 +1,15 @@
+controlled_joint_names:  
+  - shoulder_pan_joint
+  - shoulder_lift_joint
+  - elbow_joint
+  - wrist_1_joint
+  - wrist_2_joint
+  - wrist_3_joint
+
+
+
+load_ndlcom: false
+configuration_time: 5
+enable_motor: true
+stop_immediately: false
+starting_controller: "link_controller"

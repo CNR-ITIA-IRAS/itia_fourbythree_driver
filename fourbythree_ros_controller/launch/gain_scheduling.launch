@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/proto3_6dof_link/gain_scheduling.yaml" />
+  <node name="fourbythree_gain_scheduling" pkg="fourbythree_ros_controller" type="gain_scheduling" output="screen" />
+
+   
+</launch>

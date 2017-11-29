@@ -1,0 +1,15 @@
+ndlcom:
+  joint_6:
+    device_class: "SerialElasticJoint"
+    ignored_errors:
+    - "CTRL_LIMIT"
+    - "SENSOR_HALL"
+    - "POSITIONDIFFERENCE"
+    - "FRICTION_IDENT"
+    controller_class: "SerialElasticJointController"
+    elasticity: 354.26
+    control_mode: 3
+    # 1 -> coppia
+    # 3 -> cascata velocita/coppia
+    # 3 -> cascata posizione/velocita/coppia
+

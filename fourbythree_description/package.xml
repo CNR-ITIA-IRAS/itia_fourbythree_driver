@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <name>fourbythree_description</name>
+  <version>1.1.5</version>
+  <description>
+      URDF fourbythree_description for FourbyThree project
+  </description>
+
+  <maintainer email="piros@todo.todo">piros</maintainer>
+  
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>urdf</run_depend>
+
+  <export>
+  </export>
+</package>

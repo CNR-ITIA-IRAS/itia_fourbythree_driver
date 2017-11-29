@@ -1,0 +1,31 @@
+<launch>
+  
+  <arg name="prototype"  />
+  <!-- By default we do not overwrite the URDF. Change the following to true to change the default behavior -->
+  
+  <arg name="load_robot_description" default="false"/>
+
+  <!-- The name of the parameter under which the URDF is loaded -->
+  <arg name="robot_description" default="robot_description"/>
+
+  <!-- Load universal robot description format (URDF) -->
+  <!-- <param if="$(arg load_robot_description)" name="$(arg robot_description)" textfile="$(find fourbythree_description)/urdf/$(arg prototype).urdf"/> -->
+  <include if="$(arg load_robot_description)"  file="$(find fourbythree_description)/launch/$(arg prototype)_upload.launch" >
+    <arg name="bringup_state_publisher" value="false" />
+    <arg name="bringup_rviz" value="false" />
+  </include>
+
+  <!-- The semantic description that corresponds to the URDF -->
+  <param name="$(arg robot_description)_semantic" textfile="$(find fourbythree_moveit)/config/$(arg prototype)/robot.srdf" />
+  
+  <!-- Load updated joint limits (override information from URDF) -->
+  <group ns="$(arg robot_description)_planning">
+    <rosparam command="load" file="$(find fourbythree_moveit)/config/$(arg prototype)/joint_limits.yaml"/>
+  </group>
+
+  <!-- Load default settings for kinematics; these settings are overridden by settings in a node's namespace -->
+  <group ns="$(arg robot_description)_kinematics">
+    <rosparam command="load" file="$(find fourbythree_moveit)/config/$(arg prototype)/kinematics.yaml"/>
+  </group>
+  
+</launch>

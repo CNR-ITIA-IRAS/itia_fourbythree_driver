@@ -1,0 +1,271 @@
+move_group:
+  controller_list:
+    - name: ""
+      action_ns: "/planner_hi/fir_planner/follow_joint_trajectory"
+      type: FollowJointTrajectory
+      joints:
+        - joint_1
+        - joint_2
+        - joint_3
+        - joint_4
+        - joint_5
+        - joint_6
+      
+
+controllers:
+  motor:
+    motor_planner_hi: "motor_fir_planner"
+    virtual_sensor_hi: "virtual_sensor"
+    model_feedforward_hi: "model_feedforward_control"
+    velocity_sensor_hi: "velocity_sensor"
+    target_velocity_sensor_hi: "target_velocity_sensor"
+  link_controller:
+    planner_hi: "fir_planner"
+    virtual_sensor_hi: "virtual_sensor"
+    model_feedforward_hi: "model_feedforward_control"
+    link_controller_hi: "driven_mass_control"
+    velocity_sensor_hi: "velocity_sensor"
+    target_velocity_sensor_hi: "target_velocity_sensor"
+  joint_teleop:
+    planner_hi: "joint_teleop"
+    virtual_sensor_hi: "virtual_sensor"
+    model_feedforward_hi: "model_feedforward_control"
+    link_controller_hi: "driven_mass_control"
+    velocity_sensor_hi: "velocity_sensor"
+    target_velocity_sensor_hi: "target_velocity_sensor"
+  cart_teleop:
+    planner_hi: "cart_teleop"
+    virtual_sensor_hi: "virtual_sensor"
+    model_feedforward_hi: "model_feedforward_control"
+    link_controller_hi: "driven_mass_control"
+    velocity_sensor_hi: "velocity_sensor"
+    target_velocity_sensor_hi: "target_velocity_sensor"
+  manual_guidance:
+    planner_hi: "fir_planner_mgd"
+    virtual_sensor_hi: "virtual_sensor"
+    model_feedforward_hi: "model_feedforward_control"
+    link_controller_hi: "driven_mass_control_with_imp"
+    impedance_hi: "manual_guidance"
+    velocity_sensor_hi: "velocity_sensor"
+    target_velocity_sensor_hi: "target_velocity_sensor"
+    
+  impedance_soft:
+    planner_hi: "fir_planner_imp"
+    virtual_sensor_hi: "virtual_sensor"
+    model_feedforward_hi: "model_feedforward_control"
+    link_controller_hi: "driven_mass_control_with_imp"
+    impedance_hi: "impedance_soft"
+    velocity_sensor_hi: "velocity_sensor"
+    target_velocity_sensor_hi: "target_velocity_sensor"
+  
+
+
+motor_planner_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/motor/joint_target"
+
+  motor_fir_planner:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/motor/joint_states"
+
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 0.25   # acc/vel
+      default_path_accuracy: 0.1
+      default_goal_accuracy: 0
+      np: 2
+
+velocity_sensor_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/none"
+
+  velocity_sensor:
+    type: "itia/control/VelocitySensor"
+    setpoint_topic_name: "/link/joint_states"
+    twist_topic_name: "/link/twist"
+    base_frame: "base"
+    tool_frame: "flange"
+    base_is_reference: true   # true base_frame, false tool frame
+    velocity_filtering_coeff: 0.95 # exp(-sampling_period/time_constant)
+    
+target_velocity_sensor_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/none"
+
+  target_velocity_sensor:
+    type: "itia/control/VelocitySensor"
+    setpoint_topic_name: "/link/joint_target"
+    twist_topic_name: "/link/twist_target"
+    base_frame: "base"
+    tool_frame: "flange"
+    base_is_reference: true   # true base_frame, false tool frame
+    velocity_filtering_coeff: 0.95 # exp(-sampling_period/time_constant)
+      
+model_feedforward_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/sp/joint_states__"
+  model_feedforward_control:
+    type: "itia/control/FeedForwardControl"
+    setpoint_topic_name:  "/motor/joint_target"
+    base_frame: "base"
+    tool_frame: "flange"
+    transient_time: 8
+    
+
+impedance_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/link/joint_target_impedance"
+
+  manual_guidance:
+    type: "itia/control/JointImpedanceControl"
+    setpoint_topic_name: "/link/joint_target"
+    external_torques_topic_name: "/external_torque"
+    adaptivity_topic_name: "impedance_recommendation"
+    inertia: [10, 12, 8, 5, 3, 3]
+    damping: [100, 100, 100, 30, 20, 30]
+    stiffness_max: [0, 0, 0, 0, 0, 0]
+    stiffness_min: [0, 0, 0, 0, 0, 0]
+    torque_deadband: [5, 15, 5, 1, 1, 1]
+  
+  impedance_soft:  
+    type: "itia/control/JointImpedanceControl"
+    setpoint_topic_name: "/link/joint_target"
+    external_torques_topic_name: "/external_torque"
+    adaptivity_topic_name: "/stiffness_recommendation"
+    inertia: [10, 12, 8, 5, 3, 3]
+    damping: [100, 100, 100, 30, 20, 30]
+    stiffness_max: [200, 200, 50, 20, 20, 20]
+    stiffness_min: [20, 20, 10, 4, 4, 4]
+    torque_deadband: [5, 15, 5, 1, 1, 1]  
+    
+planner_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/link/joint_target"
+
+  fir_planner:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/link/joint_states"
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 0.25   # acc/vel
+      default_path_accuracy: 0.1
+      default_goal_accuracy: 0
+      np: 2  
+
+  fir_planner_mgd:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/link/joint_states"
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 0.25   # acc/vel
+      default_path_accuracy: 0.2
+      default_goal_accuracy: 0
+      np: 2  
+
+  fir_planner_imp:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/link/joint_states"
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 0.25   # acc/vel
+      default_path_accuracy: 0.2
+      default_goal_accuracy: 0
+      np: 2  
+
+  joint_teleop:
+    type: "itia/motion/JointTeleopFirController"
+    feedback_topic_name: "/link/joint_states"
+    setpoint_topic_name: "/gui/joint_movements"
+    message_timeout: 0.010 #time interval where the last message is consired valid, then the speed is set to zero
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 0.5   # acc/vel
+      default_path_accuracy: 0.2
+      default_goal_accuracy: 0
+      np: 2  
+
+  cart_teleop:
+    type: "itia/motion/CartTeleopFirController"
+    feedback_topic_name: "/link/joint_states"
+    setpoint_topic_name: "/gui/cartesian_movement"
+    base_frame: "ACTIVE_FRAME"
+    tool_frame: "ACTIVE_TOOL"
+    message_timeout: 0.010 #time interval where the last message is consired valid, then the speed is set to zero
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 0.5   # acc/vel
+      default_path_accuracy: 0.2
+      default_goal_accuracy: 0
+      np: 2  
+
+link_controller_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/motor/joint_target"
+
+  driven_mass_control_with_imp:
+    type: "itia/control/DrivenMassController"
+    setpoint_topic_name: "/link/joint_target_impedance"
+    feedback_topic_name: "/elastic/joint_states"
+    feedforward_topic_name: "/driven_mass/joint_feedforward"
+    
+  driven_mass_control:
+    type: "itia/control/DrivenMassController"
+    setpoint_topic_name: "/link/joint_target"
+    feedback_topic_name: "/elastic/joint_states"
+    feedforward_topic_name: "/driven_mass/joint_feedforward"
+      
+virtual_sensor_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/link/joint_feedforward_debug"
+  virtual_sensor:
+    type: "itia/control/VirtualSensor"
+    setpoint_topic_name: "/link/joint_states"
+    external_torques_topic_name: "/external_torque"
+    external_wrench_topic_name: "/external_wrench"
+    base_frame: "base"
+    tool_frame: "flange"
+    base_is_reference: true   # true base_frame, false tool frame
+    
+    acc_filtering_coeff: 0.95 # exp(-sampling_period/time_constant)
+    torque_filtering_coeff: 0.999 # exp(-sampling_period/time_constant)
+    force_filter_coeff: 0.999     # exp(-sampling_period/time_constant)
+    forgetting_factor: 0.95      # exp(-sampling_period/forgettin_time_constant)
+
+
+model_feedforward_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/sp/joint_states"
+  model_feedforward_control:
+    type: "itia/control/FeedForwardControl"
+    setpoint_topic_name:  "/motor/joint_target"
+    base_frame: "base"
+    tool_frame: "flange"
+    transient_time: 8
+    
+    
+tip_link: flange
+base_link: base
+joint_controller_ns: planner_hi/fir_planner
+group_name: FourByThreeGroup
+joint_names:
+- joint_1
+- joint_2
+- joint_3
+- joint_4
+- joint_5
+- joint_6

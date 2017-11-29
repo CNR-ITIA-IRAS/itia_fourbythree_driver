@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <xacro:macro name="dh_link" params="joint_name link_name parent_name d theta r alpha max_pos min_pos max_vel max_eff">
+    <joint name="${joint_name}" type="revolute">
+      <parent link="${parent_name}"/>
+      <child link="${link_name}_rotZ"/>
+      <origin xyz="0 0 ${d}" rpy="0.0 0 ${theta}" />
+      <axis xyz="0 0 1" />
+      <limit lower="${min_pos}" upper="${max_pos}" effort="${max_eff}" velocity="${max_vel}"/>
+    </joint>
+    <joint name="${joint_name}_fixed" type="fixed">
+      <parent link="${link_name}_rotZ"/>
+      <child link="${link_name}"/>
+      <origin xyz="${r} 0 0" rpy="${alpha} 0.0 0" />
+    </joint>
+    <link name="${link_name}_rotZ" />
+    <link name="${link_name}" />
+  </xacro:macro>
+  
+</robot>

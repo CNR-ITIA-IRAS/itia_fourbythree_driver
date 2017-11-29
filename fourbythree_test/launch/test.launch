@@ -1,0 +1,35 @@
+<launch>
+  
+  <arg name="nodelet_manager_name" value="fourbythree_nodelet" /> 
+  <arg name="feedforward_name" value="torque_multisine" /> 
+ 
+  
+  <!-- LOADING LOW LEVEL HARDWARE INTERFACE -->
+  <group ns="$(arg feedforward_name)">
+    <rosparam command="load" file="$(find fourbythree_test)/cfg/$(arg feedforward_name).yaml" />
+  </group>
+
+  
+  <!-- STARTING NODELET MANAGER -->
+<!--  <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager_name)"  args="manager" output="screen">
+    <param name="num_worker_threads" value="20" />
+  </node>
+  -->
+	<node pkg="rosservice" 
+			 name="load_$(arg feedforward_name)" 
+			 type="rosservice" 
+			 args="call --wait /$(arg nodelet_manager_name)/load_nodelet 
+			 '$(arg feedforward_name)'
+			 'itia/identification/FeedforwardActionNodelet'
+			 ['']
+			 ['']
+			 ['']
+			 ''" 
+			 output="screen" />  
+
+
+	<rosparam command="load" file="$(find fourbythree_test)/cfg/binary_logger_fourbythree_test.yaml" />
+	<node pkg="binary_logger" type="logger_start" name="logger_start" output="screen"/>
+	
+</launch>
+

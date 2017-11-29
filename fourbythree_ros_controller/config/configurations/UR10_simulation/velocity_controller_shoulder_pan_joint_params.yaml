@@ -1,0 +1,60 @@
+itia_velocity_controller:
+  shoulder_pan_joint:
+    position_minimum_error: 0.001
+    pos_filter:
+      A:
+      - [0.5]
+      B:
+      - [0.5]
+      Baw:
+      - [0.0 ]
+      C: 
+      - [1.0]
+      D:
+      - [0.0]
+      max_output:
+      - [30.0 ]
+      min_output:
+      - [-30.0 ]
+      initial_state:
+      - [0.00000000e+00 ]
+      initialization_matrix:
+      - [1.0 ]
+    target_pos_filter:
+      A:
+      - [0.5]
+      B:
+      - [0.5]
+      Baw:
+      - [0.0 ]
+      C: 
+      - [1.0]
+      D:
+      - [0.0]
+      max_output:
+      - [30.0 ]
+      min_output:
+      - [-30.0 ]
+      initial_state:
+      - [0.00000000e+00 ]
+      initialization_matrix:
+      - [1.0 ]
+    position:
+      A:
+      - [0.0]
+      B:
+      - [0.0]
+      Baw:
+      - [0.0 ]
+      C:
+      - [0.00000e-00]
+      D:
+      - [5.00000000e+00] #Kp
+      max_output:
+      - [ 2.200000e+00 ]
+      min_output:
+      - [-2.200000e+00 ]
+      initial_state:
+      - [0.00000000e+00 ]
+      initialization_matrix:
+      - [0.0 ]     

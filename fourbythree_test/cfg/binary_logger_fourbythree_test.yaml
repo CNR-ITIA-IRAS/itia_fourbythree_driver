@@ -1,0 +1,48 @@
+binary_logger:
+  num_worker_threads: 20
+  # test_path: is the path where the binary file will be saved (if empty the destination directory will be '/home/user/.ros' )
+  test_path: "/home/piros/test_multisine"
+  
+  
+  # manager_name: name of the nodlet manager (need to be equal to the name in the launch file)
+  manager_name: 'fourbythree_nodelet'
+
+  # list of nodelet (unrelated to binary_logger package) that the user do not want to stop
+  unstoppable_nodelets: 
+  - "/driver"
+  - "controller"
+  - "elastic_js_logger"
+  - "planner"
+  - "torque_multisine"
+  - "high_controller_hi"
+  - "low_controller_hi"
+  - "planner_hi"
+
+
+  
+  # Type of the topic that need to be logged (supported JointState, Imu, PoseStamped, WrenchStamped, Float64MultiArray)
+  topic_type: 
+    - 'JointState'
+
+  
+  ##################################  
+  # For each topic type:
+  ##################################
+  
+  # Topic type
+  JointState:
+    # List of the topic to be acquired 
+    topic_names:
+      - '/elastic/joint_states'
+      - '/sp/joint_states'
+      - '/joint_feedforward'
+      - '/rigid/joint_feedforward'
+    
+
+    # Message decimation (to be specified for each topic)
+    decimation:
+      - 1 
+      - 1
+      - 1
+      - 1
+   

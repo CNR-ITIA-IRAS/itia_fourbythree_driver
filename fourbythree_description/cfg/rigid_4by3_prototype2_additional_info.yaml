@@ -1,0 +1,47 @@
+prototype2:
+  joint_names: 
+  - "joint_1"
+  - "joint_2"
+  - "joint_3"
+  - "joint_4"
+  - "joint_5"
+
+  base_link: "base"
+  tool_link: "link_5"
+  
+  gravity: [0, 0, -9.806]
+  
+  joint_1:
+    motor:
+      type: "Ideal"
+    friction:
+      type: "Polynomial1"
+      coefficients: [0, 0, 1.0e-6, 100]
+
+  joint_2:
+    motor:
+      type: "Ideal"
+    friction:
+      type: "Polynomial1"
+      coefficients: [0, 0, 1.0e-6, 100]
+      
+  joint_3:
+    motor:
+      type: "Ideal"
+    friction:
+      type: "Polynomial1"
+      coefficients: [0, 0, 1.0e-6, 100]
+      
+  joint_4:
+    motor:
+      type: "Ideal"
+    friction:
+      type: "Polynomial1"
+      coefficients: [0, 0, 1.0e-6, 100]
+      
+  joint_5:
+    motor:
+      type: "Ideal"
+    friction:
+      type: "Polynomial1"
+      coefficients: [0, 0, 1.0e-6, 100]

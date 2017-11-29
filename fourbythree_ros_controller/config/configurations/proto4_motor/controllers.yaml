@@ -1,0 +1,99 @@
+move_group:
+  controller_list:
+    - name: ""
+      action_ns: "/motor_planner_hi/motor_fir_planner/follow_joint_trajectory"
+      type: FollowJointTrajectory
+      joints:
+        - joint_1
+        - joint_2
+        - joint_3
+        - joint_4
+        - joint_5
+        - joint_6
+      
+
+controllers:
+  motor:
+    motor_planner_hi: "motor_fir_planner"
+    virtual_sensor_hi: "virtual_sensor"
+    model_feedforward_hi: "model_feedforward_control"
+  motor_without_ffw:
+    motor_planner_hi_without_ffw: "motor_fir_planner_without_ffw"
+    virtual_sensor_hi: "virtual_sensor"
+
+motor_planner_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/motor/joint_target"
+
+  motor_fir_planner:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/motor/joint_states"
+
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 0.25   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2
+      
+motor_planner_hi_without_ffw:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/sp/joint_states"
+  motor_fir_planner_without_ffw:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/motor/joint_states"
+
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 0.25   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2
+
+
+      
+virtual_sensor_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/link/joint_feedforward_debug"
+  virtual_sensor:
+    type: "itia/control/VirtualSensor"
+    setpoint_topic_name: "/link/joint_states"
+    external_torques_topic_name: "/external_torque"
+    external_wrench_topic_name: "/external_wrench"
+    base_frame: "base"
+    tool_frame: "flange"
+    base_is_reference: true   # true base_frame, false tool frame
+    
+    acc_filtering_coeff: 0.95 # exp(-sampling_period/time_constant)
+    torque_filtering_coeff: 0.999 # exp(-sampling_period/time_constant)
+    force_filter_coeff: 0.999     # exp(-sampling_period/time_constant)
+    forgetting_factor: 0.95      # exp(-sampling_period/forgettin_time_constant)
+#    torque_filtering_coeff: 0.95 # exp(-sampling_period/time_constant)
+#    force_filter_coeff: 0.95     # exp(-sampling_period/time_constant)
+#    forgetting_factor: 0.95      # exp(-sampling_period/forgettin_time_constant)
+
+model_feedforward_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/sp/joint_states"
+  model_feedforward_control:
+    type: "itia/control/FeedForwardControl"
+    setpoint_topic_name:  "/motor/joint_target"
+    base_frame: "base"
+    tool_frame: "flange"
+    transient_time: 8
+    
+tip_link: flange
+base_link: base
+joint_names:
+- joint_1
+- joint_2
+- joint_3
+- joint_4
+- joint_5
+- joint_6

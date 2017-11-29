@@ -1,0 +1,15 @@
+<library path="lib/libfourbythree_test">
+  <class name="itia/identification/MultisineNodelet" type="itia::identification::MultisineNodelet" base_class_type="nodelet::Nodelet">
+  <description>
+    Multisine frequency test
+  </description>
+  </class>
+
+  <class name="itia/identification/FeedforwardActionNodelet" type="itia::identification::FeedforwardActionNodelet" base_class_type="nodelet::Nodelet">
+  <description>
+    Multisine frequency test
+  </description>
+  </class>
+</library>
+
+

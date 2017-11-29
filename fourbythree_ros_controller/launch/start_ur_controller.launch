@@ -1,0 +1,26 @@
+<launch>
+  <arg name="simulation"    /> 
+  <arg name="configuration" />
+  <arg name="force_monitor" />
+
+  <param name="/configuration_name" type="string" value="$(arg configuration)" />
+  <param name="/load_force_monitor" type="bool"   value="$(arg force_monitor)" />
+  
+  <arg name="nodelet_manager_name" default="fourbythree_nodelet" /> 
+  
+  
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/starting_configuration.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/controllers.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/velocity_controller_elbow_joint_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/velocity_controller_shoulder_lift_joint_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/velocity_controller_shoulder_pan_joint_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/velocity_controller_wrist_1_joint_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/velocity_controller_wrist_2_joint_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/velocity_controller_wrist_3_joint_params.yaml" />
+
+  <!--  START CONTROLLER UI  -->
+  <!--   <node name="fourbythree_ros_controller_gui" pkg="fourbythree_ros_controller" type="fourbythree_ros_controller_gui" output="screen" />  -->
+  <node name="fourbythree_controller_manager" pkg="fourbythree_ros_controller" type="fourbythree_controller_manager" output="screen" />
+    
+
+</launch>

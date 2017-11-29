@@ -1,0 +1,42 @@
+move_group:
+  controller_list:
+    - name: ""
+      action_ns: "/motor_planner_hi/motor_fir_planner/follow_joint_trajectory"
+      type: FollowJointTrajectory
+      joints:
+        - joint_1
+        - joint_2
+        - joint_3
+
+
+configuration_name: "basic_2dof"
+
+controllers:
+  motor:
+    motor_planner_hi: "motor_fir_planner"
+    
+    
+motor_planner_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/sp/joint_states"
+
+  motor_fir_planner:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/motor/joint_states"
+
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5]
+      acc_vel_ratio: 0.25   # acc/vel
+      default_path_accuracy: 0.2
+      default_goal_accuracy: 0
+      np: 2
+   
+tip_link: flange
+base_link: base
+joint_names:
+- joint_1
+- joint_2
+- joint_3
+

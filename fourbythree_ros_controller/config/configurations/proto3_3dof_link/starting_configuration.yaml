@@ -1,0 +1,14 @@
+controlled_joint_names:  
+  - "joint_1"
+  - "joint_2"
+  - "joint_3"
+
+
+
+
+load_ndlcom: true
+configuration_time: 5
+enable_motor: true
+stop_immediately: false
+virtual_sensor_initialization_procedure: true
+starting_controller: "link_controller"

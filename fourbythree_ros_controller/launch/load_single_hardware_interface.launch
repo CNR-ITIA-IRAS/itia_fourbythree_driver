@@ -1,0 +1,56 @@
+<launch>
+  
+  <arg name="nodelet_manager_name" default="fourbythree_nodelet" /> 
+  <arg name="interface_name" default="model_controller_hi" /> 
+  <arg name="controller_name" default="cascade_control" /> 
+  <arg name="start_controller" default="false" /> 
+  <arg name="load_controller" default="true" /> 
+  <arg name="load_hi" default="true" /> 
+  
+    <!-- LOADING MOTOR HARDWARE INTERFACE -->
+  <group ns="$(arg interface_name)">
+    <group ns="$(arg controller_name)">
+      <rosparam command="load" file="$(find fourbythree_ros_controller)/config/$(arg controller_name).yaml" />
+    </group>
+    <rosparam command="load" file="$(find fourbythree_ros_controller)/config/$(arg interface_name).yaml" />
+  </group>
+  
+  <group if="$(arg load_hi)">
+    <!--  NOTE: LOAD LOW LEVEL (DEFLECTION CONTROL) HARDWARE INTERFACE   -->
+    <node pkg="rosservice" 
+          name="load_low_level_hi" 
+          type="rosservice" 
+          args="call --wait /$(arg nodelet_manager_name)/load_nodelet 
+                '$(arg interface_name)'
+                'itia/control/JointStatesNodeletHwInterface'
+                ['']
+                ['']
+                ['']
+                ''" 
+          output="screen" />
+    
+    <group if="$(arg load_controller)">
+      <!--  NOTE: LOAD LOW LEVEL (DEFLECTION CONTROL) CONTROLLER   -->
+      <node pkg="rosservice" 
+            name="load_controller_$(arg controller_name)" 
+            type="rosservice" 
+            args="call --wait /$(arg interface_name)/controller_manager/load_controller
+                  '$(arg controller_name)'
+                  " 
+            output="screen" />
+
+      <group if="$(arg start_controller)">
+        <node pkg="rosservice" 
+              name="start_$(arg interface_name)" 
+              type="rosservice" 
+              args="call --wait /$(arg interface_name)/controller_manager/switch_controller
+                    [$(arg controller_name)]
+                    ['']
+                    2
+                    "
+              output="screen" />
+      </group>
+    </group>
+  </group>
+  
+</launch>

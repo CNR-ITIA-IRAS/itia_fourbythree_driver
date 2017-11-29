@@ -1,0 +1,16 @@
+controlled_joint_names:  
+  - "joint_1"
+
+
+
+starting_hi:
+- "motor_planner_hi"
+
+starting_controllers:
+- "motor_fir_planner"
+
+load_ndlcom: true
+configuration_time: 5
+enable_motor: true
+stop_immediately: false
+virtual_sensor_initialization_procedure: false

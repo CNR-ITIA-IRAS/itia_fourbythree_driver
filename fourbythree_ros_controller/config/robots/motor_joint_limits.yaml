@@ -1,0 +1,32 @@
+#ndlcom:
+  #joint_1: 
+    #registers:
+      #POS_MIN: -3.0 
+      #POS_MAX: 3.0
+
+  #joint_2: 
+    #registers:
+      #POS_MIN: -2.2
+      #POS_MAX: 2.2
+
+  #joint_3: 
+    #registers:
+      #POS_MIN: -2.7 
+      #POS_MAX: 2.7
+
+  #joint_4: 
+    #registers:
+      #POS_MIN: -3.0 
+      #POS_MAX: 3.0
+
+  #joint_5: 
+    #registers:
+      #POS_MIN: -1.85 
+      #POS_MAX: 1.85
+
+  #joint_6: 
+    #registers:
+      #POS_MIN: -3.0 
+      #POS_MAX: 3.0
+ndlcom:
+  power_supply_current: 20 # [A]

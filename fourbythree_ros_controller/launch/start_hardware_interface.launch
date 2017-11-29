@@ -1,0 +1,59 @@
+<launch>
+  
+  <arg name="using_external_nodelet_manager" default="true" /> 
+  <arg name="simulation" default="false" /> 
+  
+
+  <arg name="identification_tool" default="false" /> 
+  <arg name="nodelet_manager_name" value="fourbythree_nodelet" /> 
+  <arg name="low_level_hardware_interface_name" value="low_controller_hi" /> 
+  <arg name="high_level_hardware_interface_name" value="high_controller_hi" /> 
+  <arg name="planner_interface_name" value="planner_hi" /> 
+  <arg name="gui" default="false" /> 
+	<arg name="planner_name" value="fir_planner" /> 
+	<arg name="low_level_controller_name" value="deflection_control" /> 
+  <arg name="high_level_controller_name" value="cascade_control" /> 
+  <arg name="feedforward_interface_name" value="model_feedforward_hi" /> 
+  <arg name="feedforward_controller_name" value="model_feedforward_control" /> 
+
+  
+  <node pkg="rosservice" 
+        name="start_$(arg low_level_hardware_interface_name)" 
+        type="rosservice" 
+        args="call --wait /$(arg low_level_hardware_interface_name)/controller_manager/switch_controller
+              [$(arg low_level_controller_name)]
+              ['']
+              2
+              " />
+
+  <node pkg="rosservice" 
+        name="start_$(arg high_level_hardware_interface_name)" 
+        type="rosservice" 
+        args="call --wait /$(arg high_level_hardware_interface_name)/controller_manager/switch_controller
+              [$(arg high_level_controller_name)]
+              ['']
+              2
+              " 
+        output="screen" />
+
+  <node pkg="rosservice" 
+        name="start_$(arg planner_name)" 
+        type="rosservice" 
+        args="call --wait /$(arg planner_interface_name)/controller_manager/switch_controller
+              [$(arg planner_name)]
+              ['']
+              2
+              " 
+        output="screen" />
+
+  
+  <node pkg="rosservice" 
+        name="start_$(arg feedforward_controller_name)" 
+        type="rosservice" 
+        args="call --wait /$(arg feedforward_interface_name)/controller_manager/switch_controller
+              [$(arg feedforward_controller_name)]
+              ['']
+              2
+              " 
+        output="screen" />
+</launch>

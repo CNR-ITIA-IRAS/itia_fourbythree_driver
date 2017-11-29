@@ -1,0 +1,247 @@
+
+ndlcom:
+  joint_5:
+    device_class: "SerialElasticJoint"
+    ignored_errors:
+    - "CTRL_LIMIT"
+    - "SENSOR_HALL"
+    - "POSITIONDIFFERENCE"
+    - "FRICTION_IDENT"
+    - "SENSOR_ICHAUS"
+    controller_class: "SerialElasticJointController"
+    control_mode: 1
+    elasticity: 120.0
+    
+    register:
+      POS_P: 7.9482421875
+      POS_I: 0.0
+      POS_D: 0.0
+      VEL_P: 0.4577636719
+      VEL_I: 3.0517578125
+      VEL_D: 0.000
+      CUR_P: 0.762939453
+      CUR_I: 76.293945313
+      CUR_D: 0.00
+    
+low_controller_hi:
+  driven_mass_control:  
+    joint_5:
+      position_minimum_error: 0.00
+      controller:
+        A:
+        - [0]
+        B:
+        - [0.0, 0.0]
+        Baw:
+        - [0.0]
+        C:
+        - [0.0]
+        D:
+        - [0.2, 0.1]
+        #- [37.0, 24.5]
+        max_output:
+        - [1.0 ]
+        min_output:
+        - [-1.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+      target_filter:
+        A:
+        - [ 0.95 ]
+        B:
+        - [ 0.05 ]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [0.0]
+        D:
+        - [1.0]
+        max_output:
+        - [30.0 ]
+        min_output:
+        - [-30.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1 ]
+      link_pos_filter:
+        A:
+        - [0.8]
+        B:
+        - [0.2]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [0.0]
+        D:
+        - [1.0]
+        max_output:
+        - [30.0 ]
+        min_output:
+        - [-30.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+      link_vel_filter:
+        A:
+        - [0.8]
+        B:
+        - [0.2]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [0.0]
+        D:
+        - [1.0]
+        max_output:
+        - [3.0 ]
+        min_output:
+        - [-3.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+
+
+motor_controller_hi:
+  motor_cascade_control:
+    joint_5:
+      position_minimum_error: 0.001
+      static_friction: 0.3
+      static_friction_vel_threshold: 0.00001
+      pos_filter:
+        A:
+        - [0.8280520657]
+        B:
+        - [0.1719479343]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [1.0]
+        D:
+        - [0.0]
+        max_output:
+        - [3.0 ]
+        min_output:
+        - [-3.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+      target_pos_filter:
+        A:
+        - [0.8]
+        B:
+        - [0.2]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [1.0]
+        D:
+        - [0.0]
+        max_output:
+        - [30.0 ]
+        min_output:
+        - [-30.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+      vel_filter:
+        A:
+        - [0.8280520657]
+        B:
+        - [0.1719479343]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [1.0]
+        D:
+        - [0.0]
+        max_output:
+        - [30.0 ]
+        min_output:
+        - [-30.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+      target_vel_filter:
+        A:
+        - [0.0]
+        B:
+        - [0.0]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [0.0]
+        D:
+        - [1.0]
+        max_output:
+        - [30.0 ]
+        min_output:
+        - [-30.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+      effort_filter:
+        A:
+        - [0.95]
+        B:
+        - [0.05]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [1.0]
+        D:
+        - [0.0]
+        max_output:
+        - [30.0 ]
+        min_output:
+        - [-30.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+      velocity:
+        A:
+        - [1.0]
+        B:
+        - [0.0, 30.0e-3, 00.0e-3 ]
+        Baw:
+        - [50.00e-3]
+        C:
+        - [1.0]
+        D:
+        - [5.00000000e+00, 0.0, 0.0 ]
+        max_output:
+        - [ 50 ]
+        min_output:
+        - [-50 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+      position:
+        A:
+        - [0.0]
+        B:
+        - [0.0]
+        Baw:
+        - [0.0 ]
+        C:
+        - [0.00000e-00]
+        D:
+        - [5.00000000e+00]
+        max_output:
+        - [1.00000000e+00 ]
+        min_output:
+        - [-1.0000000e+00 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [0.0 ]     

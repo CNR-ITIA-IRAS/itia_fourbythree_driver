@@ -1,0 +1,16 @@
+
+<library path="lib/libndlcom_driver">
+  <class name="ndlcom_ros/NdlcomDriverNodelet" type="ndlcom_ros::NdlcomDriverNodelet" base_class_type="nodelet::Nodelet">
+  <description>
+    NDLCOM nodelet
+  </description>
+  </class>
+
+  <class name="ndlcom_ros/NdlcomDriverNodeletFake" type="ndlcom_ros::NdlcomDriverNodeletFake" base_class_type="nodelet::Nodelet">
+  <description>
+    fake NDLCOM nodelet 
+  </description>
+  </class>
+
+</library>
+

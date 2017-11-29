@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: fourbythree_description
+    relative_path: urdf/prototype2.urdf
+  SRDF:
+    relative_path: config/prototype2.srdf
+  CONFIG:
+    author_name: Enrico Villagrossi
+    author_email: enrico.villagrossi@gmail.com
+    generated_timestamp: 1496331034

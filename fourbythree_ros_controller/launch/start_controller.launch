@@ -1,0 +1,59 @@
+<launch>
+  <arg name="simulation" default="false" /> 
+  <arg name="rviz" default="false" /> 
+  <arg name="port" default="/dev/ttyUSB0"/> 
+  <arg name="configuration" default="simulation_planner"/>
+  <arg name="robot" default="5"/>
+
+  
+  <param name="/ndlcom/port" type="string" value="$(arg port)" />
+  <param name="/robot_name" type="string" value="prototype$(arg robot)" />
+  <param name="/configuration_name" type="string" value="$(arg configuration)" />
+
+  <arg name="nodelet_manager_name" default="fourbythree_nodelet" /> 
+  
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/starting_configuration.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/controllers.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/joint1_controllers_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/joint2_controllers_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/joint3_controllers_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/joint4_controllers_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/joint5_controllers_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/configurations/$(arg configuration)/joint6_controllers_params.yaml" />
+  <rosparam command="load" file="$(find ndlcom_driver)/cfg/ndlcom_configuration.yaml" />
+
+
+  <rosparam command="load" file="$(find fourbythree_ros_controller)config/robots/proto$(arg robot)/joint1_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)config/robots/proto$(arg robot)/joint2_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)config/robots/proto$(arg robot)/joint3_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)config/robots/proto$(arg robot)/joint4_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)config/robots/proto$(arg robot)/joint5_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)config/robots/proto$(arg robot)/joint6_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)config/robots/motor_joint_limits.yaml" />
+  
+
+  <group if="$(arg simulation)">
+    <param name="/use_sim_time" type="boolean" value="true" />
+  </group>
+
+	<!--  START CONTROLLER UI  -->
+<!-- 	<node name="fourbythree_ros_controller_gui" pkg="fourbythree_ros_controller" type="fourbythree_ros_controller_gui" output="screen" />  -->
+	<node name="fourbythree_controller_manager" pkg="fourbythree_ros_controller" type="fourbythree_controller_manager"  output="screen"/>
+
+  <param  name="robot_description" textfile="$(find fourbythree_description)/urdf/prototype$(arg robot)_par_calib_link.urdf" />
+
+  <group ns="virtual_sensor_hi">
+    <group ns="virtual_sensor">
+      <param  name="robot_description" textfile="$(find fourbythree_description)/urdf/prototype$(arg robot)_par_calib_link.urdf" /> 
+    </group> 
+  </group>    
+  <group ns="model_feedforward_hi">
+    <group ns="model_feedforward_control">
+      <param  name="robot_description" textfile="$(find fourbythree_description)/urdf/prototype$(arg robot)_par_calib_motor.urdf" /> 
+    </group> 
+  </group>
+  
+  <rosparam command="load" file="$(find fourbythree_description)/cfg/rigid_4by3_prototype$(arg robot)_additional_info.yaml" />
+  
+
+</launch>

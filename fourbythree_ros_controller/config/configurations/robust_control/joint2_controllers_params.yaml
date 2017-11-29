@@ -1,0 +1,174 @@
+ndlcom:
+  joint_2:
+    device_class: "SerialElasticJoint"
+    ignored_errors:
+    - "CTRL_LIMIT"
+    - "SENSOR_HALL"
+    - "POSITIONDIFFERENCE"
+    - "FRICTION_IDENT"
+    controller_class: "SerialElasticJointController"
+    elasticity: 1948.1
+    control_mode: 3
+    # 1 -> coppia
+    # 3 -> cascata velocita/coppia
+
+link_controller_hi:
+  driven_mass_control:
+    joint_2:
+      position_minimum_error: 0.01
+      controller:
+        A:
+        - [0]
+        B:
+        - [0.0, 0.0]
+        Baw:
+        - [0.0]
+        C:
+        - [0.0]
+        D:
+        - [0.0, 0.0]
+        max_output:
+        - [0.2 ]
+        min_output:
+        - [-0.2 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+      target_filter:
+        A:
+        - [ 0.8 ]
+        B:
+        - [0.2 ]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [1.0]
+        D:
+        - [0.0]
+        max_output:
+        - [30.0 ]
+        min_output:
+        - [-30.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1 ]
+      link_pos_filter:
+        A:
+        - [0.8]
+        B:
+        - [0.2]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [0.0]
+        D:
+        - [1.0]
+        max_output:
+        - [30.0 ]
+        min_output:
+        - [-30.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+      link_vel_filter:
+        A:
+        - [0.8]
+        B:
+        - [0.2]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [0.0]
+        D:
+        - [1.0]
+        max_output:
+        - [0.0 ]
+        min_output:
+        - [-0.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+
+  driven_mass_control_with_imp:
+    joint_2:
+      position_minimum_error: 0.001
+      controller:
+        A:
+        - [0]
+        B:
+        - [0.0, 0.0]
+        Baw:
+        - [0.0]
+        C:
+        - [0.0]
+        D:
+        - [0.1, 0.3]
+        max_output:
+        - [0.2 ]
+        min_output:
+        - [-0.2 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+      target_filter:
+        A:
+        - [ 0.8 ]
+        B:
+        - [0.2 ]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [1.0]
+        D:
+        - [0.0]
+        max_output:
+        - [30.0 ]
+        min_output:
+        - [-30.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1 ]
+      link_pos_filter:
+        A:
+        - [0.8]
+        B:
+        - [0.2]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [0.0]
+        D:
+        - [1.0]
+        max_output:
+        - [30.0 ]
+        min_output:
+        - [-30.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]
+      link_vel_filter:
+        A:
+        - [0.8]
+        B:
+        - [0.2]
+        Baw:
+        - [0.0 ]
+        C: 
+        - [0.0]
+        D:
+        - [1.0]
+        max_output:
+        - [0.0 ]
+        min_output:
+        - [-0.0 ]
+        initial_state:
+        - [0.00000000e+00 ]
+        initialization_matrix:
+        - [1.0 ]

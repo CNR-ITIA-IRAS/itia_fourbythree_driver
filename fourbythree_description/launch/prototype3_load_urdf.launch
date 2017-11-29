@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+  <param  name="robot_description" textfile="$(find fourbythree_description)/urdf/prototype3.urdf" />
+</launch>

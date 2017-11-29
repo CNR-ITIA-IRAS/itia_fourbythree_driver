@@ -1,0 +1,98 @@
+controller_list:
+  - name: ""
+    action_ns: "/motor_planner_hi/motor_fir_planner/follow_joint_trajectory"
+    type: FollowJointTrajectory
+    joints:
+      - joint_1
+      - joint_2
+      - joint_3
+      - joint_4
+      - joint_5
+      - joint_6
+      
+      
+high_controller_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/rigid/joint_target"
+
+  cascade_control:
+    type: "itia/control/TopicCascadeControl"
+    setpoint_topic_name: "/joint_target"
+    feedback_topic_name: "/rigid/joint_states"
+    feedforward_topic_name: "/rigid/joint_feedforward"
+
+
+low_controller_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/motor/joint_target"
+  
+  deflection_control:
+    type: "itia/control/DeflectionControl"
+    setpoint_topic_name: "/rigid/joint_target"
+    feedback_topic_name: "/elastic/joint_states"
+    feedforward_topic_name: "/deflection/joint_feedforward"
+  driven_mass_control:
+    type: "itia/control/DrivenMassController"
+    setpoint_topic_name: "/joint_target"
+    feedback_topic_name: "/elastic/joint_states"
+    feedforward_topic_name: "/driven_mass/joint_feedforward"
+    
+model_feedforward_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/rigid/joint_feedforward__"
+  model_feedforward_control:
+    type: "itia/control/FeedForwardControl"
+    setpoint_topic_name: "/joint_target"
+    base_frame: "base"
+    tool_frame: "flange"
+    transient_time: 10
+    
+motor_controller_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/sp/joint_states"
+  motor_cascade_control:
+    type: "itia/control/TopicCascadeControl"
+    setpoint_topic_name: "/motor/joint_target"
+    feedback_topic_name: "/motor/joint_states"
+    feedforward_topic_name: "/motor/joint_feedforward"
+    use_target_torque: false
+
+    
+    
+planner_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/joint_target"
+
+  fir_planner:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/rigid/joint_states"
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 1   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2  
+      
+      
+motor_planner_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/motor/joint_target"
+
+  motor_fir_planner:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/motor/joint_states"
+
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 1   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2

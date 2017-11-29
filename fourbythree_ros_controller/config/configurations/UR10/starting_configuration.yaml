@@ -1,0 +1,19 @@
+controlled_joint_names:  
+  - shoulder_lift_joint
+  - shoulder_pan_joint
+  - elbow_joint
+  - wrist_1_joint
+  - wrist_2_joint
+  - wrist_3_joint
+
+starting_hi:
+- "planner_hi"
+
+starting_controllers:
+- "fir_planner"
+
+load_ndlcom: false
+configuration_time: 5
+enable_motor: true
+stop_immediately: false
+virtual_sensor_initialization_procedure: false

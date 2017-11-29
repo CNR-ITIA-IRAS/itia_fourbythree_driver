@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="debug" default="false" /> 
+  
+  <group ns="calibration">
+    <param name="debug" type="boolean" value="$(arg debug)" />
+    
+    <group if="$(arg debug)">
+      <node name="joint_state_publisher_tmp1" pkg="joint_state_publisher" type="joint_state_publisher" >
+        <param name="use_gui" value="true"/>
+      </node>
+      <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+      </node>
+    </group>
+    
+    <group unless="$(arg debug)">
+      <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+        <remap from="joint_states" to="/rigid/joint_states"/>
+      </node>
+    </group>
+    
+    <rosparam file="$(find fourbythree_test)/cfg/calibration_positions.yaml" command="load"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find fourbythree_description)/urdf/fourbythree_urdf_template.urdf.xacro'" />
+    <node name="calibration_test" pkg="fourbythree_test" type="calibration_test" output="screen">
+      <remap from="follow_joint_trajectory/cancel" to="/motor_planner_hi/motor_fir_planner/follow_joint_trajectory/cancel"/>
+      <remap from="follow_joint_trajectory/feedback" to="/motor_planner_hi/motor_fir_planner/follow_joint_trajectory/feedback"/>
+      <remap from="follow_joint_trajectory/goal" to="/motor_planner_hi/motor_fir_planner/follow_joint_trajectory/goal"/>
+      <remap from="follow_joint_trajectory/result" to="/motor_planner_hi/motor_fir_planner/follow_joint_trajectory/result"/>
+      <remap from="follow_joint_trajectory/status" to="/motor_planner_hi/motor_fir_planner/follow_joint_trajectory/status"/>
+    </node>
+  </group>
+  
+  
+  
+</launch>

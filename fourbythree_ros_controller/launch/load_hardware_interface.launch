@@ -1,0 +1,47 @@
+<launch>
+  
+  <arg name="using_external_nodelet_manager" default="true" /> 
+  <arg name="simulation" default="false" /> 
+  <arg name="gui" default="false" /> 
+  <arg name="identification_tool" default="false" /> 
+  <arg name="nodelet_manager_name" value="fourbythree_nodelet" /> 
+  
+  <arg name="use_motor_interface" default="true"/>
+  <arg name="start_motor_controller" default="true"/>
+  <arg name="motor_interface_name" value="motor_controller_hi" /> 
+  <arg name="motor_controller_name" value="motor_cascade_control" /> 
+  
+  <arg name="low_level_hardware_interface_name" value="low_controller_hi" /> 
+  <arg name="low_level_controller_name" value="deflection_control" /> 
+  
+  <arg name="high_level_hardware_interface_name" value="high_controller_hi" /> 
+  <arg name="high_level_controller_name" value="cascade_control" /> 
+  
+  <arg name="planner_interface_name" value="planner_hi" /> 
+  <arg name="planner_name" value="fir_planner" /> 
+  
+  <arg name="feedforward_interface_name" value="model_feedforward_hi" /> 
+  <arg name="feedforward_controller_name" value="model_feedforward_control" /> 
+  
+
+  <!-- LOADING JOINT CONFIGURATIONS -->
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/joint1_controllers_params.yaml" />
+<!--  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/joint2_controllers_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/joint3_controllers_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/joint4_controllers_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/joint5_controllers_params.yaml" />
+  <rosparam command="load" file="$(find fourbythree_ros_controller)/config/joint6_controllers_params.yaml" />-->
+
+
+  <group if="$(arg use_motor_interface)">
+    <include file="$(find fourbythree_ros_controller)/launch/load_single_hardware_interface.launch">
+      <arg name="nodelet_manager_name" value="$(arg nodelet_manager_name)"/>
+      <arg name="interface_name" value="$(arg motor_interface_name)"/>
+      <arg name="controller_name" value="$(arg motor_controller_name)"/>
+      <arg name="start_controller" value="$(arg start_motor_controller)"/>
+    </include>
+  </group>
+
+        
+
+</launch>

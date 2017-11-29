@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: fourbythree_description
+    relative_path: urdf/prototype4.urdf
+  SRDF:
+    relative_path: config/prototype4.srdf
+  CONFIG:
+    author_name: Manuel Beschi
+    author_email: manuel.beschi@itia.cnr.it
+    generated_timestamp: 1496156612

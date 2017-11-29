@@ -1,0 +1,144 @@
+<sdf version='1.6'>
+  <model name='elastic_robot_2dof'>
+    <plugin name='complete_joint_state_publisher' filename='libgazebo_ros_complete_joint_state_publisher.so'>
+      <robotNamespace>/elastic</robotNamespace>
+      <jointName>joint1_motor,joint1_spring</jointName>
+      <updateRate>1000.0</updateRate>
+      <alwaysOn>true</alwaysOn>
+    </plugin>
+    <plugin name='complete_joint_state_publisher' filename='libgazebo_ros_complete_joint_state_publisher.so'>
+      <robotNamespace>/motor</robotNamespace>
+      <jointName>joint1_motor</jointName>
+      <updateRate>1000.0</updateRate>
+      <alwaysOn>true</alwaysOn>
+    </plugin>
+    <plugin name='joint_state_subscriber' filename='libgazebo_ros_joint_state_subscriber.so'>
+      <robotNamespace>/sp</robotNamespace>
+      <jointName>joint1_motor</jointName>
+      <updateRate>1000.0</updateRate>
+      <alwaysOn>true</alwaysOn>
+    </plugin>
+    <link name='base'>
+      <pose frame=''>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>4</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0.1</izz>
+        </inertia>
+      </inertial>
+      <visual name='base_visual'>
+        <pose frame=''>0 0 0.1 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.2</length>
+            <radius>0.1</radius>
+          </cylinder>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='root_joint' type='revolute'>
+      <child>base</child>
+      <parent>world</parent>
+      <axis>
+        <limit>
+          <lower>0</lower>
+          <upper>0</upper>
+        </limit>
+        <dynamics>
+          <damping>0</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+    <link name='motor1'>
+      <pose frame=''>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>4</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0.1</izz>
+        </inertia>
+      </inertial>
+    </link>
+    <joint name='joint1_motor' type='revolute'>
+      <child>motor1</child>
+      <parent>base</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-2.74</lower>
+          <upper>2.74</upper>
+          <effort>80</effort>
+          <velocity>0.7</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0.000000</spring_stiffness>
+          <damping>18.8 00000</damping>
+          <friction>5.00000</friction>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='link1'>
+      <pose frame=''>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>4</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>2.0</izz>
+        </inertia>
+      </inertial>
+      <visual name='link1_visual'>
+        <pose frame=''>0 0 0.27645 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.1529</length>
+            <radius>0.1</radius>
+          </cylinder>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint1_spring' type='revolute'>
+      <child>link1</child>
+      <parent>motor1</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-2.74</lower>
+          <upper>2.74</upper>
+          <effort>80</effort>
+          <velocity>1.5</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>920.000000</spring_stiffness>
+          <damping>18.000000</damping>
+          <friction>0.00000</friction>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <static>0</static>
+  </model>
+</sdf>

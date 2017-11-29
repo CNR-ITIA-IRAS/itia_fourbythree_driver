@@ -1,0 +1,124 @@
+move_group:
+  controller_list:
+    - name: ""
+      action_ns: "/planner_hi/fir_planner/follow_joint_trajectory"
+      type: FollowJointTrajectory
+      joints:
+        - joint_1
+        - joint_2
+        - joint_3
+
+
+configuration_name: "proto3_1dof_link"
+
+controllers:
+  motor:
+    motor_planner_hi: "motor_fir_planner"
+  link_controller:
+    planner_hi: "fir_planner"
+    link_controller_hi: "driven_mass_controller_1_0_0"
+      
+    
+motor_planner_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/sp/joint_states"
+
+  motor_fir_planner:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/motor/joint_states"
+
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [1.0, 1.0, 0.5]
+      acc_vel_ratio: 4.00 # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2
+
+      
+      
+      
+planner_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/link/joint_target"
+
+  fir_planner:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/link/joint_states"
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [1.0, 1.0, 0.5]
+      acc_vel_ratio: 1.0   # acc/vel
+      default_path_accuracy: 0.001
+      default_goal_accuracy: 0
+      np: 2  
+
+  fir_planner_mgd:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/link/joint_states"
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 0.5   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2  
+
+  fir_planner_imp:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/link/joint_states"
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 0.5   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2  
+
+  joint_teleop:
+    type: "itia/motion/JointTeleopFirController"
+    feedback_topic_name: "/link/joint_states"
+    setpoint_topic_name: "/gui/joint_movements"
+    message_timeout: 0.010 #time interval where the last message is consired valid, then the speed is set to zero
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.15, 0.15, 0.15, 0.15, 0.15, 0.15]
+      acc_vel_ratio: 2.0   # acc/vel
+      default_path_accuracy: 0.2
+      default_goal_accuracy: 0
+      np: 2  
+
+  cart_teleop:
+    type: "itia/motion/CartTeleopFirController"
+    feedback_topic_name: "/link/joint_states"
+    setpoint_topic_name: "/gui/cartesian_movement"
+    base_frame: "ACTIVE_FRAME"
+    tool_frame: "ACTIVE_TOOL"
+    message_timeout: 0.010 #time interval where the last message is consired valid, then the speed is set to zero
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.15, 0.15, 0.15, 0.15, 0.15, 0.15]
+      acc_vel_ratio: 2.0   # acc/vel
+      default_path_accuracy: 0.2
+      default_goal_accuracy: 0
+      np: 2  
+
+link_controller_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/sp/joint_states"
+
+  driven_mass_controller_0_0_0:
+    type: "itia/control/DrivenMassController"
+    setpoint_topic_name: "/link/joint_target"
+    feedback_topic_name: "/elastic/joint_states"
+    feedforward_topic_name: "/driven_mass/joint_feedforward"
+
+  driven_mass_controller_1_0_0:
+    type: "itia/control/DrivenMassController"
+    setpoint_topic_name: "/link/joint_target"
+    feedback_topic_name: "/elastic/joint_states"
+    feedforward_topic_name: "/driven_mass/joint_feedforward"
+

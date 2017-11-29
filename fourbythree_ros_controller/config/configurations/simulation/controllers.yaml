@@ -1,0 +1,159 @@
+move_group:
+  controller_list:
+    - name: ""
+      action_ns: "/motor_planner_hi/motor_fir_planner/follow_joint_trajectory"
+      type: FollowJointTrajectory
+      joints:
+        - joint_1
+        - joint_2
+        - joint_3
+        - joint_4
+        - joint_5
+        - joint_6
+      
+
+controllers:
+  motor:
+    motor_controller_hi: "motor_cascade_control"
+    motor_planner_hi: "motor_fir_planner"
+    model_feedforward_hi: "virtual_sensor"
+  link:
+    motor_controller_hi: "motor_cascade_control"
+    low_controller_hi: "driven_mass_control"
+    planner_hi: "fir_planner"
+  motor_impedance:
+    motor_controller_hi: "motor_cascade_control"
+    low_controller_hi: "motor_impedance_control"
+    planner_hi: "fir_planner"
+  joint_teleop:
+    motor_controller_hi: "motor_cascade_control"
+    low_controller_hi: "driven_mass_control"
+    planner_hi: "joint_teleop_planner"
+  cart_teleop:
+    motor_controller_hi: "motor_cascade_control"
+    low_controller_hi: "driven_mass_control"
+    planner_hi: "cart_teleop_planner"
+
+
+
+
+low_controller_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/motor/joint_target"
+
+  motor_impedance_control:
+    type: "itia/control/JointImpedanceControl"
+    setpoint_topic_name: "/joint_target"
+    external_torques_topic_name: "/external_torque"
+    adaptivity_topic_name: "/to_be_defined"
+    inertia: [5, 5, 5, 5, 5, 5]
+    damping: [63, 63, 63, 63, 63, 63]
+    stiffness_max: [200, 200, 200, 200, 200, 200]
+    stiffness_min: [50, 50, 50, 50, 50, 50]
+    torque_deadband: [5, 5, 5, 5, 5, 5]
+    
+  driven_mass_control:
+    type: "itia/control/DrivenMassController"
+    setpoint_topic_name: "/joint_target"
+    feedback_topic_name: "/elastic/joint_states"
+    feedforward_topic_name: "/driven_mass/joint_feedforward"
+    published_link_topic_name: "/rigid/joint_states"
+    
+motor_controller_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/sp/joint_states"
+  motor_cascade_control:
+    use_model_feedforward: true
+    use_feedback: false
+    base_frame: "base"
+    tool_frame: "flange"
+    type: "itia/control/TopicCascadeControl"
+    setpoint_topic_name: "/motor/joint_target"
+    feedback_topic_name: "/motor/joint_states"
+    feedforward_topic_name: "/motor/joint_feedforward"
+    use_target_torque: false
+    
+
+motor_planner_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/motor/joint_target"
+  motor_fir_planner:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/motor/joint_states"
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 1   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2  
+
+planner_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/joint_target"
+
+  fir_planner:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/rigid/joint_states"
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 1   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2  
+
+  joint_teleop_planner:
+    type: "itia/motion/JointTeleopFirController"
+    feedback_topic_name: "/rigid/joint_states"
+    setpoint_topic_name: "/gui/joint_movement"
+    message_timeout: 0.010 #time interval where the last message is consired valid, then the speed is set to zero
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 1   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2  
+
+  cart_teleop_planner:
+    type: "itia/motion/CartTeleopFirController"
+    feedback_topic_name: "/rigid/joint_states"
+    setpoint_topic_name: "/gui/cartesian_movement"
+    base_frame: "base"
+    tool_frame: "flange"
+    message_timeout: 0.010 #time interval where the last message is consired valid, then the speed is set to zero
+    fir_params:
+      sample_period: 0.001  
+      cruise_jnt_vel: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+      acc_vel_ratio: 1   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2  
+
+model_feedforward_hi:
+  nodelet_hardware_interface:
+    sampling_period: 1.0e-3
+    topic_name: "/motor/joint_feedforward_debug"
+  model_feedforward_control:
+    type: "itia/control/FeedForwardControl"
+    setpoint_topic_name: "/motor/joint_target"
+    base_frame: "base"
+    tool_frame: "flange"
+    transient_time: 10
+  virtual_sensor:
+    type: "itia/control/VirtualSensor"
+    setpoint_topic_name: "/motor/joint_states"
+    external_torques_topic_name: "/external_torque"
+    external_wrench_topic_name: "/external_wrench"
+    base_frame: "base"
+    tool_frame: "flange"
+    base_is_reference: true # true base_frame, false tool frame
+    
+    torque_filtering_coeff: 0.95 # exp(-sampling_period/time_constant)
+    force_filter_coeff: 0.95     # exp(-sampling_period/time_constant)
+    forgetting_factor: 0.95      # exp(-sampling_period/forgettin_time_constant)

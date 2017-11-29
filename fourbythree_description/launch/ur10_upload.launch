@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+  
+  <arg name="bringup_state_publisher" default="false" />
+  <arg name="bringup_rviz" default="false" />
+  
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ur_description)/urdf/ur10_joint_limited_robot.urdf.xacro'" />
+  
+  <group if="$(arg bringup_state_publisher)" >
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+      <param name="use_gui" value="true"/>
+    </node>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+    
+    <group if="$(arg bringup_rviz)" >
+      <node pkg="rviz" type="rviz" name="rviz" args="-d $(find fourbythree_description)/rviz/calibration.rviz"/>
+    </group>
+    
+  </group>
+  
+</launch>

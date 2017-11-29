@@ -1,0 +1,252 @@
+<robot name="prototype4">
+    <material name="Blue">
+        <texture />
+        <color rgba="0 0 1 1" />
+    </material>
+    <material name="DarkGrey">
+        <texture />
+        <color rgba="0.3 0.3 0.3 1" />
+    </material>
+    <material name="Grey">
+        <texture />
+        <color rgba="0.5 0.5 0.5 1" />
+    </material>
+    <material name="LightGrey">
+        <texture />
+        <color rgba="0.7 0.7 0.7 1" />
+    </material>
+    <link name="base">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 3.14159" />
+            <geometry>
+                <mesh filename="package://fourbythree_description/meshes/prototype4_base.stl" scale="1 1 1" />
+            </geometry>
+            <material name="LightGrey">
+                <texture />
+                <color rgba="0.7 0.7 0.7 1" />
+            </material>
+        </visual>
+    </link>
+    <link name="flange">
+        <inertial>
+            <mass value="-2.45075" />
+            <origin xyz="0.0100499 0.00854943 -0.167842" rpy="0 -0 0" />
+            <inertia ixx="0.0749315" ixy="0.255457" ixz="-0.0175156" iyy="0.0220693" iyz="-0.114917" izz="0.141708" />
+        </inertial>
+    </link>
+    <link name="flange_rotZ">
+        <inertial>
+            <mass value="-2.45075" />
+            <origin xyz="0.0100499 0.00854943 -0.167842" rpy="0 -0 0" />
+            <inertia ixx="0.0749315" ixy="0.255457" ixz="-0.0175156" iyy="0.0220693" iyz="-0.114917" izz="0.141708" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 -0 0" />
+            <geometry>
+                <mesh filename="package://fourbythree_description/meshes/prototype4_flange.stl" scale="1 1 1" />
+            </geometry>
+            <material name="LightGrey">
+                <texture />
+                <color rgba="0.7 0.7 0.7 1" />
+            </material>
+        </visual>
+    </link>
+    <link name="link1">
+        <inertial>
+            <mass value="5.85535e-28" />
+            <origin xyz="0 0 0" rpy="0 -0 0" />
+            <inertia ixx="-1.46635e-26" ixy="-1.69264e-20" ixz="-3.13411e-28" iyy="0.864947" iyz="8.47057e-12" izz="-3.33411e-26" />
+        </inertial>
+    </link>
+    <link name="link1_rotZ">
+        <inertial>
+            <mass value="2.14253e-27" />
+            <origin xyz="0 0 0" rpy="0 -0 0" />
+            <inertia ixx="-3.4938e-27" ixy="8.0846e-28" ixz="-1.10089e-27" iyy="-1.468e-28" iyz="1.81714e-27" izz="0.864947" />
+        </inertial>
+        <visual>
+            <origin xyz="0 -0.03 -0.02" rpy="0 0 -1.5708" />
+            <geometry>
+                <mesh filename="package://fourbythree_description/meshes/prototype4_link1.stl" scale="1 1 1" />
+            </geometry>
+            <material name="LightGrey">
+                <texture />
+                <color rgba="0.7 0.7 0.7 1" />
+            </material>
+        </visual>
+    </link>
+    <link name="link2">
+        <inertial>
+            <mass value="2.72873" />
+            <origin xyz="0.804978 0.103925 1.27449e-17" rpy="0 -0 0" />
+            <inertia ixx="-1.25998" ixy="0.988783" ixz="0.700625" iyy="2.12493" iyz="2.8408" izz="0.854801" />
+        </inertial>
+    </link>
+    <link name="link2_rotZ">
+        <inertial>
+            <mass value="6.19146e-28" />
+            <origin xyz="0 0 0" rpy="0 -0 0" />
+            <inertia ixx="-1.25998" ixy="0.988783" ixz="0.700625" iyy="2.12493" iyz="2.8408" izz="0.854801" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0.09" rpy="0 -1.5708 3.1416" />
+            <geometry>
+                <mesh filename="package://fourbythree_description/meshes/prototype4_link2.stl" scale="1 1 1" />
+            </geometry>
+            <material name="LightGrey">
+                <texture />
+                <color rgba="0.7 0.7 0.7 1" />
+            </material>
+        </visual>
+    </link>
+    <link name="link3">
+        <inertial>
+            <mass value="2.726" />
+            <origin xyz="-0.0168058 6.60807e-13 0.134942" rpy="0 -0 0" />
+            <inertia ixx="0.536342" ixy="0.368911" ixz="0.586571" iyy="0.229312" iyz="0.713947" izz="0.328605" />
+        </inertial>
+    </link>
+    <link name="link3_rotZ">
+        <inertial>
+            <mass value="2.726" />
+            <origin xyz="-0.0168058 0.134942 2.18506e-17" rpy="0 -0 0" />
+            <inertia ixx="0.536342" ixy="0.586571" ixz="-0.368911" iyy="0.328605" iyz="-0.713947" izz="0.229312" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 -1.5708 -1.5708" />
+            <geometry>
+                <mesh filename="package://fourbythree_description/meshes/prototype4_link3.stl" scale="1 1 1" />
+            </geometry>
+            <material name="LightGrey">
+                <texture />
+                <color rgba="0.7 0.7 0.7 1" />
+            </material>
+        </visual>
+    </link>
+    <link name="link4">
+        <inertial>
+            <mass value="2.44129" />
+            <origin xyz="0.0127594 0.150679 0.00297418" rpy="0 -0 0" />
+            <inertia ixx="0.362572" ixy="-0.0344883" ixz="0.378829" iyy="0.0957012" iyz="-0.130035" izz="0.403082" />
+        </inertial>
+    </link>
+    <link name="link4_rotZ">
+        <inertial>
+            <mass value="2.44129" />
+            <origin xyz="0.0127594 -0.00297418 0.150679" rpy="0 -0 0" />
+            <inertia ixx="0.362572" ixy="-0.378829" ixz="-0.0344883" iyy="0.403082" iyz="0.130035" izz="0.0957012" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 -0.39" rpy="0 -0 1.5708" />
+            <geometry>
+                <mesh filename="package://fourbythree_description/meshes/prototype4_link4.stl" scale="1 1 1" />
+            </geometry>
+            <material name="LightGrey">
+                <texture />
+                <color rgba="0.7 0.7 0.7 1" />
+            </material>
+        </visual>
+    </link>
+    <link name="link5">
+        <inertial>
+            <mass value="2.44129" />
+            <origin xyz="-0.000616982 -0.00297418 0.168492" rpy="0 -0 0" />
+            <inertia ixx="-0.0377654" ixy="-0.0308672" ixz="-0.325969" iyy="0.134766" iyz="-0.379578" izz="0.496038" />
+        </inertial>
+    </link>
+    <link name="link5_rotZ">
+        <inertial>
+            <mass value="2.44129" />
+            <origin xyz="-0.000616982 0.168492 0.00297418" rpy="0 -0 0" />
+            <inertia ixx="-0.0377654" ixy="-0.325969" ixz="0.0308672" iyy="0.496038" iyz="0.379578" izz="0.134766" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 -0.01" rpy="0 1.5708 1.5708" />
+            <geometry>
+                <mesh filename="package://fourbythree_description/meshes/prototype4_link5.stl" scale="1 1 1" />
+            </geometry>
+            <material name="LightGrey">
+                <texture />
+                <color rgba="0.7 0.7 0.7 1" />
+            </material>
+        </visual>
+    </link>
+    <joint name="joint_1" type="revolute">
+        <origin xyz="0 0 0.425" rpy="0 -0 0" />
+        <axis xyz="0 0 1" />
+        <parent link="base" />
+        <child link="link1_rotZ" />
+        <limit effort="250" velocity="0.5" lower="-2.8" upper="2.8" />
+    </joint>
+    <joint name="joint_1_fixed" type="fixed">
+        <origin xyz="0 0 0" rpy="1.5708 -0 0" />
+        <axis xyz="0 0 0" />
+        <parent link="link1_rotZ" />
+        <child link="link1" />
+    </joint>
+    <joint name="joint_2" type="revolute">
+        <origin xyz="0 0 0" rpy="0 -0 1.5708" />
+        <axis xyz="0 0 1" />
+        <parent link="link1" />
+        <child link="link2_rotZ" />
+        <limit effort="250" velocity="0.5" lower="-1.8" upper="1.8" />
+    </joint>
+    <joint name="joint_2_fixed" type="fixed">
+        <origin xyz="0.6569 0 0" rpy="0 -0 0" />
+        <axis xyz="0 0 0" />
+        <parent link="link2_rotZ" />
+        <child link="link2" />
+    </joint>
+    <joint name="joint_3" type="revolute">
+        <origin xyz="0 0 0.006" rpy="0 0 -1.5708" />
+        <axis xyz="0 0 1" />
+        <parent link="link2" />
+        <child link="link3_rotZ" />
+        <limit effort="90" velocity="0.5" lower="-2.5" upper="2.5" />
+    </joint>
+    <joint name="joint_3_fixed" type="fixed">
+        <origin xyz="0 0 0" rpy="-1.5708 0 0" />
+        <axis xyz="0 0 0" />
+        <parent link="link3_rotZ" />
+        <child link="link3" />
+    </joint>
+    <joint name="joint_4" type="revolute">
+        <origin xyz="0 0 0.56345" rpy="0 -0 0" />
+        <axis xyz="0 0 1" />
+        <parent link="link3" />
+        <child link="link4_rotZ" />
+        <limit effort="40" velocity="0.5" lower="-2.8" upper="2.8" />
+    </joint>
+    <joint name="joint_4_fixed" type="fixed">
+        <origin xyz="0 0 0" rpy="1.5708 -0 0" />
+        <axis xyz="0 0 0" />
+        <parent link="link4_rotZ" />
+        <child link="link4" />
+    </joint>
+    <joint name="joint_5" type="revolute">
+        <origin xyz="0 0 0" rpy="0 -0 0" />
+        <axis xyz="0 0 1" />
+        <parent link="link4" />
+        <child link="link5_rotZ" />
+        <limit effort="40" velocity="0.5" lower="-1.57" upper="1.57" />
+    </joint>
+    <joint name="joint_5_fixed" type="fixed">
+        <origin xyz="0 0 0" rpy="-1.5708 0 0" />
+        <axis xyz="0 0 0" />
+        <parent link="link5_rotZ" />
+        <child link="link5" />
+    </joint>
+    <joint name="joint_6" type="revolute">
+        <origin xyz="0 0 0.26055" rpy="0 -0 0" />
+        <axis xyz="0 0 1" />
+        <parent link="link5" />
+        <child link="flange_rotZ" />
+        <limit effort="40" velocity="0.5" lower="-2.8" upper="2.8" />
+    </joint>
+    <joint name="joint_6_fixed" type="fixed">
+        <origin xyz="0 0 0" rpy="0 -0 0" />
+        <axis xyz="0 0 0" />
+        <parent link="flange_rotZ" />
+        <child link="flange" />
+    </joint>
+</robot>

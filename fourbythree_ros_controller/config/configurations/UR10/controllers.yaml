@@ -1,0 +1,102 @@
+move_group:
+  controller_list:
+    - name: ""
+      action_ns: "/planner_hi/fir_planner/follow_joint_trajectory"
+      type: FollowJointTrajectory
+      joints:
+        - shoulder_lift_joint
+        - shoulder_pan_joint
+        - elbow_joint
+        - wrist_1_joint
+        - wrist_2_joint
+        - wrist_3_joint
+
+controller_list:
+  - name: ""
+    action_ns: "/planner_hi/fir_planner/follow_joint_trajectory"
+    type: FollowJointTrajectory
+    joints:
+      - shoulder_lift_joint
+      - shoulder_pan_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+
+controllers:
+  motor:
+    planner_hi: "fir_planner"
+  link_controller:
+    planner_hi: "fir_planner"
+  joint_teleop:
+    planner_hi: "joint_teleop_planner"
+  cart_teleop:
+    planner_hi: "cart_teleop_planner"
+
+
+force_monitor_wrench_name: /wrench
+planner_hi:
+  nodelet_hardware_interface:
+    sampling_period: 0.008
+    topic_name: "/joint_target"
+
+  fir_planner:
+    type: "itia/motion/FirController"
+    feedback_topic_name: "/joint_states"
+    fir_params:
+      sample_period: 0.008  
+      cruise_jnt_vel: [1.5, 1.5, 1.5, 1.5, 1.5, 1.5]
+      acc_vel_ratio: 4.0 #0.25   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0.001
+      np: 2
+      use_time: true
+      
+  joint_teleop_planner:
+    type: "itia/motion/JointTeleopFirController"
+    feedback_topic_name: "/link/joint_states"
+    setpoint_topic_name: "/gui/joint_movements"
+    message_timeout: 0.010 #time interval where the last message is consired valid, then the speed is set to zero
+    fir_params:
+      sample_period: 0.008  
+      cruise_jnt_vel: [0.25, 0.25, 0.25, 0.25, 0.25, 0.25]
+      acc_vel_ratio: 4.0   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2  
+
+  cart_teleop_planner:
+    type: "itia/motion/CartTeleopFirController"
+    feedback_topic_name: "/link/joint_states"
+    setpoint_topic_name: "/gui/cartesian_movement"
+    base_frame: "ACTIVE_FRAME"
+    tool_frame: "ACTIVE_TOOL"
+    message_timeout: 0.010 #time interval where the last message is consired valid, then the speed is set to zero
+    fir_params:
+      sample_period: 0.008  
+      cruise_jnt_vel: [0.25, 0.25, 0.25, 0.25, 0.25, 0.25]
+      acc_vel_ratio: 4.0   # acc/vel
+      default_path_accuracy: 0.01
+      default_goal_accuracy: 0
+      np: 2     
+
+itia_velocity_controller:
+  type:                         itia/controller/VelocityInterfaceVelocityController
+  setpoint_topic_name:          "/joint_target"
+  feedback_topic_name:          "/joint_states"
+  feedforward_topic_name:       "/joint_feedforward"
+  monitor_command_topic_name:   "/monitor/joint_speed_command"
+  use_target_torque: false
+  joint_names:  
+    - name: shoulder_pan_joint
+      iAx:  0
+    - name: shoulder_lift_joint
+      iAx:  1
+    - name: elbow_joint
+      iAx:  2
+    - name: wrist_1_joint
+      iAx:  3
+    - name: wrist_2_joint
+      iAx:  4
+    - name: wrist_3_joint
+      iAx:  5

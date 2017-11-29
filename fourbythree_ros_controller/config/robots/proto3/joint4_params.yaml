@@ -1,0 +1,31 @@
+ndlcom:
+  joint_4:
+    device_class: "SerialElasticJoint"
+    ignored_errors:
+    - "CTRL_LIMIT"
+    - "SENSOR_HALL"
+    - "POSITIONDIFFERENCE"
+    - "FRICTION_IDENT"
+    - "SENSOR_ICHAUS"
+    controller_class: "SerialElasticJointController"
+    elasticity: 74.1
+    control_mode: 3
+    # 1 -> coppia
+    # 3 -> cascata velocita/coppia
+    # 3 -> cascata posizione/velocita/coppia
+
+    registers:
+      CUR_P: 0.1
+      CUR_I: 10.0
+      CUR_D: 0.00
+      VEL_P: 23.1
+      VEL_I: 367.65
+      VEL_D: 0.00
+      POS_P: 15.0
+      POS_I: 0.0
+      POS_D: 0.0
+      CUR_DEAD_ZONE: 0.0
+      VEL_DEAD_ZONE: 0.0
+      POS_DEAD_ZONE: 0.001
+      CUR_MAX: 9.0
+      CUR_MAX_HARD_LIMIT: 10.0

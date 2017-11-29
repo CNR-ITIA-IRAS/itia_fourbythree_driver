@@ -1,0 +1,10 @@
+<launch>
+  <node pkg="nodelet" type="nodelet" name="fourbythree_nodelet"  args="manager"  output="screen"> 
+    <param name="num_worker_threads" value="20" />
+<!--    <remap from="/planner_hi_imp/fir_planner_imp/follow_joint_trajectory/cancel" to="/planner_hi/fir_planner/follow_joint_trajectory/cancel"/>
+    <remap from="/planner_hi_imp/fir_planner_imp/follow_joint_trajectory/feedback" to="/planner_hi/fir_planner/follow_joint_trajectory/feedback"/>
+    <remap from="/planner_hi_imp/fir_planner_imp/follow_joint_trajectory/goal" to="/planner_hi/fir_planner/follow_joint_trajectory/goal"/>
+    <remap from="/planner_hi_imp/fir_planner_imp/follow_joint_trajectory/result" to="/planner_hi/fir_planner/follow_joint_trajectory/result"/>
+    <remap from="/planner_hi_imp/fir_planner_imp/follow_joint_trajectory/status" to="/planner_hi/fir_planner/follow_joint_trajectory/status"/>-->
+  </node>
+</launch>

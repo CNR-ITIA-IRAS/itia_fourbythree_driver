@@ -1,0 +1,9 @@
+env_param:
+  joint_torque_limit: [50, 50, 50, 20, 20, 20]
+  tcp_force_limit:
+    x: 60 # 20  # X-Force N
+    y: 60 # 20  # Y-Force N
+    z: 60 # 20  # Z-Force N
+    a: 200   # X-Torque Nm
+    b: 200   # Y-Torque Nm
+    c: 200   # Z-Torque Nm

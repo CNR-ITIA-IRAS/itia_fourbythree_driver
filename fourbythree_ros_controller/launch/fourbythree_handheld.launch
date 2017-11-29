@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<launch>
+  
+  <param name="/env_param/OVERRIDE" type="double" value="80.0" />
+  
+  <param name="/env_param/ROBOT/x" type="double" value="0.870" />
+  <param name="/env_param/ROBOT/y" type="double" value="0.123" />
+  <param name="/env_param/ROBOT/z" type="double" value="0.543" />
+  <param name="/env_param/ROBOT/a" type="double" value="4.0" />
+  <param name="/env_param/ROBOT/b" type="double" value="5.0" />
+  <param name="/env_param/ROBOT/c" type="double" value="6.0" />
+  
+  <param name="/env_param/BASE/x" type="double" value="10.0" />
+  <param name="/env_param/BASE/y" type="double" value="20.0" />
+  <param name="/env_param/BASE/z" type="double" value="30.0" />
+  <param name="/env_param/BASE/a" type="double" value="40.0" />
+  <param name="/env_param/BASE/b" type="double" value="50.0" />
+  <param name="/env_param/BASE/c" type="double" value="60.0" />
+  
+  <param name="/env_param/FRAME/x" type="double" value="0.0" />
+  <param name="/env_param/FRAME/y" type="double" value="0.0" />
+  <param name="/env_param/FRAME/z" type="double" value="0.0" />
+  <param name="/env_param/FRAME/a" type="double" value="0.0" />
+  <param name="/env_param/FRAME/b" type="double" value="0.0" />
+  <param name="/env_param/FRAME/c" type="double" value="1.5708" />
+  
+  <param name="/env_param/TOOL/x" type="double" value="0.0" />
+  <param name="/env_param/TOOL/y" type="double" value="0.0" />
+  <param name="/env_param/TOOL/z" type="double" value="0.0" />
+  <param name="/env_param/TOOL/a" type="double" value="0.0" />
+  <param name="/env_param/TOOL/b" type="double" value="0.0" />
+  <param name="/env_param/TOOL/c" type="double" value="0.0" />
+  
+  <param name="/env_param/TOOLCAMERA/x" type="double" value="10000.0" />
+  <param name="/env_param/TOOLCAMERA/y" type="double" value="20000.0" />
+  <param name="/env_param/TOOLCAMERA/z" type="double" value="30000.0" />
+  <param name="/env_param/TOOLCAMERA/a" type="double" value="40000.0" />
+  <param name="/env_param/TOOLCAMERA/b" type="double" value="50000.0" />
+  <param name="/env_param/TOOLCAMERA/c" type="double" value="60000.0" />
+ 
+  <param name="/env_param/TOOLDATA/x" type="double" value="1.111" />
+  <param name="/env_param/TOOLDATA/y" type="double" value="2.2222" />
+  <param name="/env_param/TOOLDATA/z" type="double" value="333.333" />
+  <param name="/env_param/TOOLDATA/mass" type="double" value="444.444" />
+   
+</launch>

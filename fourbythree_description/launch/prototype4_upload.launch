@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  
+  <arg name="bringup_state_publisher" default="false" />
+  <arg name="bringup_rviz" default="false" />
+  
+  <param  name="robot_description" textfile="$(find fourbythree_description)/urdf/prototype4.urdf" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+    <param name="use_gui" value="true"/>
+  </node>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+  
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find fourbythree_description)/rviz/calibration.rviz"/>
+</launch>
